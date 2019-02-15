@@ -1,14 +1,22 @@
-const todos = [
-    {
-        id: 1,
-        title: "lunch",
-        description: "Go for lunch by 2pm"
-    },
-    {
-        id: 2,
-        title: "dinner",
-        description: "7pm I go for my dinner"
-    }
+const meal = [
+  {
+    id: 1,
+    name: 'Rice',
+    quantity: 'Small',
+    price: 200
+  },
+  {
+    id: 2,
+    name: 'Rice andBeans',
+    quantity: 'Medium',
+    price: 300
+  },
+  {
+    id: 3,
+    name: 'Bread',
+    quantity: 'Large',
+    price: 400
+  }
 ];
 
 export default todos;
