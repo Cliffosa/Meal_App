@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(router);
 
 // assigned port variable
-const PORT = 5000;
+const PORT = 3000;
 // call app to listen to the port
 app.listen(PORT, () => {
   console.log(`App listening to port ${PORT}`);
