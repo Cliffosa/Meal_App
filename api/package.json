@@ -4,7 +4,7 @@
   "description": "A simple meal booking app",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/app.js",
+    "start": "nodemon src/app.js --exec babel-node --",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Clifford Okoro",
