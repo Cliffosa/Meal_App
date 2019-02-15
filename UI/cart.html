@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Meal | Booking | App</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/slide.css">
+        <link rel="stylesheet" href="css/modal.css">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <header id="header">
+            <div class="container">
+                <div class="brand">
+                    <a href="index.html"><i class="fas fa-home"></i> <span>M</span>eal <span>B</span>ooking <span>A</span>pp</a>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="cart.html" id="cartOpenModalBtn"><i class="fas fa-shopping-cart" ></i><span class="notify">(4)</span> Cart</a></li>
+                        <li><a href="#"><i class="fas fa-bell"></i><span class="notify">(3)</span> Notification</a></li>
+                        <li><a href="customer.html"><i class="fas fa-user"></i>  Welcome, Mary</a></li>
+                        <li><a href="index.html"><i class="fas fa-sign-out-alt"></i>  Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <section class="container">
+            <aside class="left-menu">
+                <h3 style="text-transform: uppercase;">Dashboard</h3>
+                <ul>
+                    <li><a href="customer-menu.html">Select By Date</a></li>
+                    <li><a href="customer-all-order.html">All Orders</a></li>
+                </ul>
+
+            </aside><!-- leftmenu end -->
+            
+            <main class="right-menu">
+                <table align="certer" class="admin-table">
+                    <caption>
+                         <div>
+                            <table>
+                                <thead>
+                                    <th>Item</th>
+                                    <th>Unit Price</th>
+                                    <th>Qty</th>
+                                    <th>Action</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Chicken and Chips</td>
+                                        <td>-N-1500</td>
+                                        <td>&#43; <span> 2 </span>&minus;</td>
+                                        <td>Remove</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Chicken and Chips</td>
+                                        <td>-N-1500</td>
+                                        <td>&#43; <span> 2 </span>&minus;</td>
+                                        <td>Remove</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h1>Cart</h1>
+                    </caption>
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Item(s)</th>
+                        <th>Qty</th>
+                        <th>Unit-Price</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>12/02/2019</td>
+                        <td>Chicken Salad Description</td>
+                        <td>Salad mixins</td>
+                        <td>2</td>
+                        <td>-N-60</td>
+                        <td>-N-120</td>
+                      </tr>
+                      <tr>
+                        <td>12/02/2019</td>
+                        <td>Beef Description</td>
+                        <td>Salad Beef</td>
+                        <td>1</td>
+                        <td>-N-60</td>
+                        <td>-N-60</td>
+                      </tr>
+                    </tbody>
+                </table>
+            </main>
+
+            
+        </section>
+
+        <footer id="footer">
+            <p>Copyright 2019.<a href="index.html"> Meal | Booking | App.</a> Design by Cliff. All rights reserved.</p>
+        </footer>
+        <div id="simpleModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="closeBtn" id="closeBtn2">&times;</span>
+                    <h2 class="heading">Create Meal</h2>
+                </div>
+                <div class="modal-body">
+                    <form action="#">
+                        <p>
+                            <input type="text" placeholder="Menu name" name="menu-name" id="menu-name" required>
+                        </p>
+                        <p>
+                            <input type="text" placeholder="Quantity" name="qty" id="qty" required>
+                        </p>
+                        <p>
+                            <input type="text" placeholder="Description" name="description" id="description" required>
+                        </p>
+                        <p>
+                            <input type="text" placeholder="Unit Price" name="price" id="price" required>
+                        </p>
+                        <p>
+                            <select name="meal" id="menu">
+                                <option>Select Menu</option>
+                                <option value="beef and rice">Beef and Rice</option>
+                                <option value="beef and rice">Beef and Rice</option>
+                                <option value="beef and rice">Beef and Rice</option>
+                                <option value="beef and rice">Beef and Rice</option>
+                            </select>
+                        </p>
+                        <p>
+                            <input type="file" name="file" id="file" required>
+                        </p>
+                        <input type="submit" value="Create Menu" id="submit" name="submit">
+                    </form> 
+                </div>
+            </div>
+        </div>
+        <script src="js/modal.js"></script>
+    </body>
+</html>

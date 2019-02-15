@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Meal | Booking | App</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+         <link rel="stylesheet" href="css/modal.css">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <header id="header">
+            <div class="container">
+                <div class="brand">
+                    <a href="admin.html"><i class="fas fa-cog"></i> Admin Dashboard</a>
+                    <a href="index.html" style="margin-left: 10px;"><i class="fas fa-home"></i> Home</a>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="admin.html"><i class="fas fa-user"></i>  Welcome, Admin</a></li>
+                        <li><a href="create-user.html"><i class="fas fa-user-secret"></i>  Create User</a></li>
+                        <li><a href="index.html"><i class="fas fa-sign-out-alt"></i>  Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <section class="container">
+            <aside class="left-menu">
+                <h3>Management</h3>
+                <ul>
+                    <li><a href="admin.html">Settings</a></li>
+                    <li><a href="#" id="createMealBtn">Create Meal</a></li>
+                    <li><a href="#" id="setMenubtn">Set Menu</a></li>
+                    <li><a href="view-order.html">View All Orders</a></li>
+                    <li><a href="sales-record.html">Sales Records</a></li>
+                    <li><a href="view-history.html">View History</a></li>
+                </ul>
+
+            </aside><!-- leftmenu end -->
+            
+            <main class="right-menu">
+               <table align="certer" class="admin-table">
+                    <caption><h1>Menu Available</h1></caption>
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Menu Name</th>
+                        <th>Meal</th>
+                        <th>Image</th>
+                        <th>Price</th>
+                        <th colspan="2">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>12/02/2019</td>
+                        <td>Chicken Salad</td>
+                        <td>Beef and Rice</td>
+                        <td><img src="images/1.jpg" width="50" height="50" alt=""></td>
+                        <td>560</td>
+                        <td class="edit"> <a href="edit-menu.html"></i> Edit</a></td>
+                        <td class="delete"><a href="#" onclick ="openModal()" > Delete</a></td>
+                      </tr>
+                      <tr>
+                        <td>12/02/2019</td>
+                        <td>Chicken Salad</td>
+                        <td>Beef and Rice</td>
+                        <td><img src="images/1.jpg" width="50" height="50" alt=""></td>
+                        <td>560</td>
+                        <td class="edit"> <a href="edit-menu.html" >Edit</a></td>
+                        <td class="delete"><a href="#" onclick ="openModal()" > Delete</a></td>
+                      </tr>
+                      <tr>
+                        <td>12/02/2019</td>
+                        <td>Chicken Salad</td>
+                        <td>Beef and Rice</td>
+                        <td><img src="images/1.jpg" width="50" height="50" alt=""></td>
+                        <td>560</td>
+                        <td class="edit"> <a href="edit-menu.html"> Edit</a></td>
+                        <td class="delete"><a href="#" onclick ="openModal()" >Delete</a></td>
+                      </tr>
+                      <tr>
+                        <td>12/02/2019</td>
+                        <td>Chicken Salad</td>
+                        <td>Beef and Rice</td>
+                        <td><img src="images/1.jpg" width="50" height="50" alt=""></td>
+                        <td>560</td>
+                        <td class="edit"> <a href="edit-menu.html" ></i> Edit</a></td>
+                        <td class="delete"><a href="#" onclick ="openModal()">Delete</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </main>
+        </section>
+
+        <footer id="footer">
+            <p>Copyright 2019.<a href="index.html"> Meal | Booking | App.</a> Design by Cliff. All rights reserved.</p>
+        </footer>
+
+    <div id="simpleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="closeBtn">&times;</span>
+                <h2 class="heading">Create Meal</h2>
+            </div>
+            <div class="modal-body">
+                <form action="#" class="create-user-admin">
+                    <p class="textbox">
+                        <input type="text" placeholder="Menu name" name="menu-name" id="menu-name" required>
+                    </p>
+                    <p class="textbox">
+                        <input type="text" placeholder="Quantity" name="qty" id="qty" required>
+                    </p>
+                    <p class="textbox">
+                        <input type="text" placeholder="Description" name="description" id="description" required>
+                    </p>
+                    <p class="textbox">
+                        <input type="text" placeholder="Unit Price" name="price" id="price" required>
+                    </p>
+                    <p class="textbox">
+                        <select name="meal" id="menu" class="textbox">
+                            <option>Select Menu</option>
+                            <option value="beef and rice">Beef and Rice</option>
+                            <option value="beef and rice">Beef and Rice</option>
+                            <option value="beef and rice">Beef and Rice</option>
+                            <option value="beef and rice">Beef and Rice</option>
+                        </select>
+                    </p>
+                    <p class="textbox">
+                        <input type="file" name="file" id="file" required>
+                    </p>
+                    <input class="btn" type="submit" value="Create Menu" id="submit" name="submit">
+                </form> 
+            </div>
+        </div>
+    </div>
+        <script src="js/modal.js"></script>
+    </body>
+</html>
