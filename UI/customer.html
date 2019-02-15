@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Meal | Booking | App</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/slide.css">
+        <link rel="stylesheet" href="css/modal.css">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <header id="header">
+            <div class="container">
+                <div class="brand">
+                    <a href="index.html"><i class="fas fa-home"></i> <span>M</span>eal <span>B</span>ooking <span>A</span>pp</a>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="cart.html" id="cartOpenModalBtn"><i class="fas fa-shopping-cart" ></i><span class="notify">(4)</span> Cart</a></li>
+                        <li><a href="#"><i class="fas fa-bell"></i><span class="notify">(3)</span> Notification</a></li>
+                        <li><a href="customer.html"><i class="fas fa-user"></i>  Welcome, Mary</a></li>
+                        <li><a href="index.html"><i class="fas fa-sign-out-alt"></i>  Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <section class="container">
+            <aside class="left-menu">
+                <h3 style="text-transform: uppercase;">Dashboard</h3>
+                <ul>
+                    <li><a href="customer-menu.html">Select By Date</a></li>
+                    <li><a href="customer-all-order.html">All Orders</a></li>
+                </ul>
+
+            </aside><!-- leftmenu end -->
+            
+            <main class="right-menu">
+                <div class="meal-photo">
+                    <img src="images/1.jpg" alt="">
+                    <h3 class="meal-name">Beef and Rice</h3>
+                     <p class="meal-description">Product description and details<a class="read-more-btn" href="meal.html"> Read More..</a></p>
+                    <div class="price">
+                        <p class="meal-price">-N- 599.00</p> 
+                        <button class="add-to-cart-btn">Order</button> 
+                    </div>
+                </div>
+                <div class="meal-photo">
+                    <img src="images/1.jpg" alt="">
+                    <h3 class="meal-name">Beef and Rice</h3>
+                     <p class="meal-description">Product description and details<a class="read-more-btn" href="meal.html"> Read More..</a></p>
+                    <div class="price">
+                        <p class="meal-price">-N- 599.00</p> 
+                        <button class="add-to-cart-btn">Order</button> 
+                    </div>
+                </div>
+                <div class="meal-photo">
+                    <img src="images/1.jpg" alt="">
+                    <h3 class="meal-name">Beef and Rice</h3>
+                     <p class="meal-description">Product description and details<a class="read-more-btn" href="meal.html"> Read More..</a></p>
+                    <div class="price">
+                        <p class="meal-price">-N- 599.00</p> 
+                        <button class="add-to-cart-btn">Order</button> 
+                    </div>
+                </div>
+            </main>
+
+            <main class="right-menu">
+                <div class="meal-photo">
+                    <img src="images/1.jpg" alt="">
+                    <h3 class="meal-name">Beef and Rice</h3>
+                     <p class="meal-description">Product description and details <a class="read-more-btn" href="meal.html"> Read More..</a></p>
+                    <div class="price">
+                        <p class="meal-price">-N- 599.00</p> 
+                        <button class="add-to-cart-btn">Order</button> 
+                    </div>
+                </div>
+                <div class="meal-photo">
+                    <img src="images/1.jpg" alt="">
+                    <h3 class="meal-name">Beef and Rice</h3>
+                     <p class="meal-description">Product description and details <a class="read-more-btn" href="meal.html"> Read More..</a></p>
+                    <div class="price">
+                        <p class="meal-price">-N- 599.00</p> 
+                        <button class="add-to-cart-btn">Order</button> 
+                    </div>
+                </div>
+                <div class="meal-photo">
+                    <img src="images/1.jpg" alt="">
+                    <h3 class="meal-name">Beef and Rice</h3>
+                     <p class="meal-description">Product description and details<a class="read-more-btn" href="meal.html"> Read More..</a></p>
+                    <div class="price">
+                        <p class="meal-price">-N- 599.00</p> 
+                        <button class="add-to-cart-btn">Order</button> 
+                    </div>
+                </div>
+            </main>
+        </section>
+
+        <footer id="footer">
+            <p>Copyright 2019.<a href="index.html"> Meal | Booking | App.</a> Design by Cliff. All rights reserved.</p>
+        </footer>
+       <div id="simpleModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="closeBtn">&times;</span>
+                        <h2 class="heading">Order Summary</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p>Your Order has Been placed!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="checkout-btn" href="cart.html">Checkout</a>
+                        <a class="back-to-shop-btn" href="index.html">Back To Shop</a>
+                    </div>
+                </div>
+        </div>
+        <script src="js/addToCart.js"></script>
+    </body>
+</html>

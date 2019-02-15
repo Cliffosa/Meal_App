@@ -1,0 +1,94 @@
+body {
+    font-family: "Roboto", Helvetica, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.button:hover {
+    background: #333;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+    background: #f4f4f4;
+    margin: 10% auto;
+    width: 30%;
+    box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),0 7px 20px 0 rgba(0,0,0,0.2);
+    animation-name: modalopen;
+    animation-duration: 0.15s;
+}
+
+.modal-header {
+    background: coral;
+    padding: 10px;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.heading {
+    margin: 0;
+}
+
+.modal-body {
+    padding: 30px 10px;
+    text-align: center;
+}
+
+.modal-footer {
+    background: coral;
+    padding: 10px 10px 40px 10px;
+    color: #fff;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.checkout-btn {
+    float: left;
+}
+
+.back-to-shop-btn{
+    float: right;
+}
+
+.modal-footer a {
+    text-decoration: none;
+    color: #fff;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 3px;
+    margin-bottom: 0;
+}
+.modal-footer a:hover {
+    background-color: #333;
+}
+
+
+.closeBtn {
+    float: right;
+    font-size: 30px;
+    color: #f1f1f1;
+}
+
+.closeBtn:hover, .closeBtn:focus {
+    color: crimson;
+    cursor: pointer;
+    text-decoration: none;
+
+}
+
+@keyframes modalopen {
+    from {opacity: 0}
+    to {opacity: 1}
+}
