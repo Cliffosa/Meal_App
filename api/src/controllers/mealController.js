@@ -1,4 +1,4 @@
-import db from '../db/db';
+import db from '../models/db';
 
 class mealsController {
   // method to get all meals
