@@ -1,71 +1,76 @@
 .slider-banner {
   width: 100%;
   height: 70vh;
-  margin:0;
+  margin: 0;
   background-image: url("../images/back-hero/slide2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-} 
-/*.slide-one {
+}
+/* .slide-one {
   background-image: url("../images/back-hero/slide1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 }
 
-.slide-two {
+ .slide-two {
   background-image: url("../images/back-hero/slide1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-}
+} 
 
 .slide-three {
   background-image: url("../images/back-hero/slide1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-}*/
-  div#slider {
-    overflow: hidden;
-    width: 100%;
-  }
-  
-  div#slider div {
-    position: relative;
-    width: 500%;
-    margin: 0;
-    left: 0;
-    font-size: 0;
-    animation: 20s slider infinite;
-  }
+} */
+div#slider {
+  overflow: hidden;
+  width: 100%;
+}
 
-  div#slider div img {
-    width: 20%;
-    float: left;
-    height:70vh;
-  }
+div#slider {
+  overflow: hidden;
+  width: 100%;
+}
 
-  @keyframes slider {
-    0% {
-      left: 0%;
-    }
-    20% {
-      left: 0%;
-    }
-    25% {
-      left: -100%;
-    }
-    45% {
-      left: -100%;
-    }
-    50% {
-      left: -200%;
-    }
-    70% {
-      left: -200%;
-    }
-    75% {
-      left: -300%;
-    }
-    95% {
-      left: -300%;
-    }
+div#slider div {
+  position: relative;
+  width: 500%;
+  margin: 0;
+  left: 0;
+  font-size: 0;
+  animation: 20s slider infinite;
+}
+
+div#slider div img {
+  width: 20%;
+  float: left;
+  height: 70vh;
+}
+
+@keyframes slider {
+  0% {
+    left: 0%;
   }
+  20% {
+    left: 0%;
+  }
+  25% {
+    left: -100%;
+  }
+  45% {
+    left: -100%;
+  }
+  50% {
+    left: -200%;
+  }
+  70% {
+    left: -200%;
+  }
+  75% {
+    left: -300%;
+  }
+  95% {
+    left: -300%;
+  }
+}
