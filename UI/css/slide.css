@@ -27,13 +27,13 @@ div#slider {
   overflow: hidden;
   width: 100%;
 }
- 
- div#slider {
+
+div#slider {
   overflow: hidden;
   width: 100%;
-} 
+}
 
- div#slider div {
+div#slider div {
   position: relative;
   width: 500%;
   margin: 0;
@@ -42,14 +42,11 @@ div#slider {
   animation: 20s slider infinite;
 }
 
-
 div#slider div img {
   width: 20%;
   float: left;
   height: 70vh;
 }
-
-
 
 @keyframes slider {
   0% {
@@ -77,4 +74,3 @@ div#slider div img {
     left: -300%;
   }
 }
-} 
