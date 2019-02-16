@@ -432,6 +432,13 @@ td:hover {
   font-size: 30px;
   font-weight: bold;
 }
+
+.plac-order-btn {
+  background: coral;
+  padding: 8px;
+  width: 100px;
+}
+
 /* ==================Admin styling==================*/
 .create-user-admin {
   width: 80%;
