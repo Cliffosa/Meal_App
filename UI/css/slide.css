@@ -6,29 +6,34 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
-/*.slide-one {
+.slide-one {
   background-image: url("../images/back-hero/slide1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 }
 
-.slide-two {
+ .slide-two {
   background-image: url("../images/back-hero/slide1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-}
+} 
 
 .slide-three {
   background-image: url("../images/back-hero/slide1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-}*/
+}
 div#slider {
   overflow: hidden;
   width: 100%;
 }
+ 
+ div#slider {
+  overflow: hidden;
+  width: 100%;
+} 
 
-div#slider div {
+ div#slider div {
   position: relative;
   width: 500%;
   margin: 0;
@@ -37,11 +42,14 @@ div#slider div {
   animation: 20s slider infinite;
 }
 
+
 div#slider div img {
   width: 20%;
   float: left;
   height: 70vh;
 }
+
+
 
 @keyframes slider {
   0% {
@@ -69,3 +77,4 @@ div#slider div img {
     left: -300%;
   }
 }
+} 

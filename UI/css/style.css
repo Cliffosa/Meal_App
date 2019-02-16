@@ -15,6 +15,62 @@ html {
   overflow: auto;
 }
 
+.full-header {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+.container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: auto;
+  text-align: center;
+}
+
+.header-overlay {
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../images//back-hero/hero.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-top: 70px;
+  margin-bottom: 20px;
+  opacity: 0.85;
+}
+
+.header-content {
+  z-index: 2;
+}
+
+.header-content h1 {
+  font-size: 50px;
+  margin-bottom: 0;
+}
+
+.header-content p {
+  font-size: 1.5rem;
+  display: block;
+  padding-bottom: 2rem;
+}
+
+.header-content a {
+  padding: 15px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+/* .sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+} */
+
 .container {
   width: 80%;
   margin: 0 auto;
@@ -478,11 +534,27 @@ td:hover {
     text-align: center;
     display: block;
   }
+<<<<<<< HEAD
   .slider-banner,
   .container {
     height: auto;
   }
 
+=======
+  /* .slider-banner,
+  .container {
+    height: auto;
+  } */
+  .header-overlay {
+    display: none;
+  }
+  .header-content a {
+    padding: 15px;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+  }
+>>>>>>> 1000aa770c04fa9ee0599596180df84b20e1aefa
   #header {
     padding-bottom: 20px;
   }
@@ -514,6 +586,16 @@ td:hover {
     width: 100%;
     float: none;
   }
+<<<<<<< HEAD
+=======
+
+  .header-content a {
+    padding: 15px;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin-bottom: 60px;
+  }
+>>>>>>> 1000aa770c04fa9ee0599596180df84b20e1aefa
   #header .brand,
   .meal-price,
   .add-to-cart-btn {
@@ -525,6 +607,7 @@ td:hover {
   }
   nav {
     float: none;
+<<<<<<< HEAD
   }
 
   nav ul li {
@@ -539,6 +622,22 @@ td:hover {
     display: none;
   }
 
+=======
+  }
+
+  nav ul li {
+    float: none;
+    display: block;
+    padding: 10px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  header a .fas {
+    display: none;
+  }
+
+>>>>>>> 1000aa770c04fa9ee0599596180df84b20e1aefa
   nav ul li:hover,
   nav ul li a:hover {
     color: #fff;
