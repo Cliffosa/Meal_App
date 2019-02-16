@@ -6,7 +6,7 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
-.slide-one {
+/* .slide-one {
   background-image: url("../images/back-hero/slide1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -22,7 +22,7 @@
   background-image: url("../images/back-hero/slide1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-}
+} */
 div#slider {
   overflow: hidden;
   width: 100%;

@@ -127,27 +127,6 @@ nav ul li {
   padding: 0 10px 0 10px;
 }
 
-.call-to-action {
-  text-align: center;
-  margin: 20px 0 40px 0;
-  color: coral;
-  font-weight: 800;
-}
-.call-to-action p {
-  margin-bottom: 20px;
-}
-.call-to-action a {
-  text-decoration: none;
-  text-transform: uppercase;
-  background-color: coral;
-  color: #fff;
-  padding: 10px;
-  border-radius: 10px;
-}
-.call-to-action a:hover {
-  background-color: #333;
-  color: #fff;
-}
 /* ==================Meals section styling==================*/
 
 .section-meals,
