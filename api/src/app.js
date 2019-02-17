@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import router from '../src/routes/mealRoutes';
+import router from '../src/routes/index';
 
 // init epress
 const app = express();
