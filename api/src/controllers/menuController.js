@@ -30,12 +30,12 @@ class menuControllers {
     // validate body
     if (!req.body.name) {
       return res.status(400).send({
-        success: 'false',
+        success: false,
         message: 'name is required'
       });
     } else if (!req.body.price) {
       return res.status(400).send({
-        success: 'false',
+        success: false,
         message: 'price is required'
       });
     }
