@@ -4,7 +4,7 @@ class mealsController {
   // method to get all meals
   getAllMeals(req, res) {
     return res.status(200).send({
-      success: 'true',
+      success: true,
       message: 'meals retrieved successfully',
       meals: meals
     });
@@ -18,7 +18,7 @@ class mealsController {
       if (meal.id === id) {
         found = true;
         return res.status(200).send({
-          success: 'true',
+          success: true,
           message: 'meal retrieved successfully',
           meal
         });
@@ -26,7 +26,7 @@ class mealsController {
     });
     if (!found) {
       return res.status(404).send({
-        success: 'false',
+        success: false,
         message: 'meal does not exist'
       });
     }
@@ -38,17 +38,17 @@ class mealsController {
     // validate body
     if (!req.body.name) {
       return res.status(400).send({
-        success: 'false',
+        success: false,
         message: 'name is required'
       });
     } else if (!req.body.quantity) {
       return res.status(400).send({
-        success: 'false',
+        success: false,
         message: 'quantity is required'
       });
     } else if (!req.body.price) {
       return res.status(400).send({
-        success: 'false',
+        success: false,
         message: 'price is required'
       });
     }
@@ -60,7 +60,7 @@ class mealsController {
     };
     meals.push(meal);
     return res.status(201).send({
-      success: 'true',
+      success: true,
       message: 'meal added successfully',
       meal
     });
@@ -80,19 +80,19 @@ class mealsController {
 
     if (!mealFound) {
       return res.status(404).send({
-        success: 'false',
+        success: false,
         message: 'meal not found'
       });
     }
     // validate body
     if (!req.body.name) {
       return res.status(400).send({
-        success: 'false',
+        success: false,
         message: 'name is required'
       });
     } else if (!req.body.quantity) {
       return res.status(400).send({
-        success: 'false',
+        success: false,
         message: 'quantity is required'
       });
     } else if (!req.body.price) {
@@ -112,7 +112,7 @@ class mealsController {
     meals.splice(itemIndex, 1, newMeal);
 
     return res.status(201).send({
-      success: 'true',
+      success: true,
       message: 'meal updated successfully',
       newMeal
     });
@@ -132,14 +132,14 @@ class mealsController {
 
     if (!mealFound) {
       return res.status(404).send({
-        success: 'false',
+        success: false,
         message: 'meal not found'
       });
     }
     meals.splice(itemIndex, 1);
 
     return res.status(200).send({
-      success: 'true',
+      success: true,
       message: 'meal deleted successfuly'
     });
   }

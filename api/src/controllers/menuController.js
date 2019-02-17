@@ -46,7 +46,7 @@ class menuControllers {
     };
     menu.push(allMenu);
     return res.status(201).send({
-      success: 'true',
+      success: true,
       message: 'menu added successfully',
       menu
     });
