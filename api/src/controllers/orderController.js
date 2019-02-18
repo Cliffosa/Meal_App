@@ -1,25 +1,12 @@
-import order from '../models/order';
+import orders from '../models/orders';
+import menu from '../models/menu';
 
 class ordersController {
   getAllOrders(req, res) {
     return res.status(200).send({
       success: true,
       message: 'orders retrieved successfully',
-      meals: order
-    });
-  }
-  getOrder(req, res) {
-    const id = parseInt(req.params.id, 10);
-    db.map(meal => {
-      if (meal.id === id) {
-        return res.status(200).send({});
-      }
-    });
-
-    // check for invalid meal id and return false
-    return res.status(404).send({
-      success: 'false',
-      message: 'meal does not exist'
+      meals: orders
     });
   }
 
@@ -44,6 +31,29 @@ class ordersController {
       success: false,
       message: "Sorry, we do not have this meal in today's menu"
     });
+  }
+
+  // get a single order
+  getOrder(req, res) {
+    let found = false;
+    const id = parseInt(req.params.id);
+    orders.map(order => {
+      if (order.id === id) {
+        found = true;
+        return res.status(200).send({
+          success: true,
+          message: 'order retrieved successfully',
+          order
+        });
+      }
+    });
+    if (!found) {
+      return res.status(404).send({
+        success: false,
+        message: 'meal does not exist'
+      });
+    }
+    // check for invalid meal id and return false
   }
 }
 

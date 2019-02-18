@@ -7,7 +7,7 @@ const meal = [
   },
   {
     id: 2,
-    name: 'Rice andBeans',
+    name: 'Rice and Beans',
     quantity: 'Medium',
     price: 300
   },
