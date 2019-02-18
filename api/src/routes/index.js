@@ -21,7 +21,7 @@ router.post('/api/v1/menu', menuController.createMenu);
 // order routes
 
 router.get('/api/v1/order', orderController.getAllOrders);
+router.get('/api/v1/order/:id', orderController.getOrder);
 router.post('/api/v1/order', orderController.createOrder);
-router.get('/api/v1/order:id', orderController.getOrder);
 
 export default router;

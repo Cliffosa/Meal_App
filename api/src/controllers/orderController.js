@@ -36,7 +36,7 @@ class ordersController {
   // get a single order
   getOrder(req, res) {
     let found = false;
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id, 10);
     orders.map(order => {
       if (order.id === id) {
         found = true;
