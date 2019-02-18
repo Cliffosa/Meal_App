@@ -165,7 +165,21 @@ nav ul li {
 
 .read-more-btn {
   text-decoration: none;
-  color: #555;
+  color: #fff;
+  background: #333333;
+  padding: 5px;
+  margin-left: 5px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.read-more-btn:hover {
+  text-decoration: none;
+  color: #fff;
+  background: coral;
+  padding: 5px;
+  margin-left: 5px;
+  border-radius: 10px;
 }
 
 .price {
