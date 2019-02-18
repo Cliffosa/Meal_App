@@ -13,8 +13,10 @@ app.use(router);
 
 app.get('/', (req, res) => {
   return res.status(200).send({
-    'message': 'Welcome To Book-A-Meal-App. Book-A-Meal is an application that allows customers to make food orders and helps the foodvendor know what the customers want to eat.' });
-})
+    message:
+      'Welcome To Book-A-Meal-App. Book-A-Meal is an application that allows customers to make food orders and helps the foodvendor know what the customers want to eat.'
+  });
+});
 
 // assigned port variable
 const PORT = 3000;
