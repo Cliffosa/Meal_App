@@ -1,8 +1,20 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import router from '../src/routes/index';
+import path from 'path';
 
-// init epress
+// DATABASE
+import db from './util/db';
+//TEST DB
+db.authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
+
+// initialize express
 const app = express();
 //configure bodyParser for incoming requests data
 app.use(bodyParser.json());
