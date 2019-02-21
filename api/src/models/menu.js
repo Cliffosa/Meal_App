@@ -1,22 +1,23 @@
-const menu = [
-  {
-    id: 1,
-    name: 'Appetizer',
-    price: 300,
-    day: 'monday'
-  },
-  {
-    id: 2,
-    name: 'Africana',
-    price: 450,
-    day: 'friday'
-  },
-  {
-    id: 3,
-    name: 'Chinise Chips',
-    price: 100,
-    day: 'monday'
-  }
-];
+import Sequelize from 'sequelize';
+import sequelize from '../util/db';
 
-export default menu;
+const Menu = sequelize.define('menu', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true
+  },
+  meals: {
+    type: Sequelize.JSON,
+    allowNull: false
+  },
+  catererId: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  createdAt: Sequelize.DATEONLY,
+  updatedAt: Sequelize.DATEONLY
+});
+
+export default Menu;

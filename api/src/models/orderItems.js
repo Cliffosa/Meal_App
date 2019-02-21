@@ -1,30 +1,22 @@
 import Sequelize from 'sequelize';
 import sequelize from '../util/db';
 
-const Meal = sequelize.define('meal', {
+const OrderItem = sequelize.define('orderItem', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true
   },
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  price: {
+  mealId: {
     type: Sequelize.INTEGER,
     allowNull: false
   },
   quantity: {
     type: Sequelize.INTEGER,
-    default: null
-  },
-  imageUrl: {
-    type: Sequelize.STRING,
     allowNull: false
   },
-  adminId: {
+  userId: {
     type: Sequelize.INTEGER,
     allowNull: false
   },
@@ -32,4 +24,4 @@ const Meal = sequelize.define('meal', {
   updatedAt: Sequelize.DATEONLY
 });
 
-export default Meal;
+export default OrderItem;
