@@ -2,7 +2,7 @@ import menu from '../models/menu';
 
 class menuControllers {
   // method to get all menu
-  getAllMenu(req, res) {
+  getTodayMenu(req, res) {
     const { day } = req.params;
     let todayMenu = [];
     let found = false;
@@ -33,21 +33,21 @@ class menuControllers {
         success: false,
         message: 'name is required'
       });
-    } else if (!req.body.price) {
+    } else if (!req.body.day) {
       return res.status(400).send({
         success: false,
-        message: 'price is required'
+        message: 'day is required'
       });
     }
     const allMenu = {
       id: menu.length + 1,
       name: req.body.name,
-      price: req.body.price
+      day: req.body.day
     };
     menu.push(allMenu);
     return res.status(201).send({
       success: true,
-      message: 'menu added successfully',
+      message: `menu added to today's menu successfully`,
       menu
     });
   }
