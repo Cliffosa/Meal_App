@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/app.js --exec babel-node --",
-    "test": "mocha --timeout 3000 --recursive"
+    "test": "mocha"
   },
   "author": "Clifford Okoro",
   "license": "ISC",
