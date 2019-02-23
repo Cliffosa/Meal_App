@@ -4,15 +4,15 @@ import router from '../src/routes/index';
 import path from 'path';
 
 // DATABASE
-import db from './util/db';
-//TEST DB
-db.authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+// import db from './util/db';
+// //TEST DB
+// db.authenticate()
+//   .then(() => {
+//     console.log('Connection has been established successfully.');
+//   })
+//   .catch(err => {
+//     console.error('Unable to connect to the database:', err);
+//   });
 
 // initialize express
 const app = express();
@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 });
 
 // assigned port variable
-const PORT = 3000;
+const PORT = 5000;
 // call app to listen to the port
 app.listen(PORT, () => {
   console.log(`App listening to port ${PORT}`);

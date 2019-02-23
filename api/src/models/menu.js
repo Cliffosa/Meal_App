@@ -1,23 +1,22 @@
-import Sequelize from 'sequelize';
-import sequelize from '../util/db';
+const menu = [
+  {
+    id: 1,
+    name: 'africana',
+    meal: 'semo',
+    day: 'monday'
+  },
+  {
+    id: 2,
+    name: 'chinise chip',
+    meal: 'garri',
+    day: 'friday'
+  },
+  {
+    id: 3,
+    name: 'grind salad',
+    meal: 'fufu',
+    day: 'monday'
+  }
+];
 
-const Menu = sequelize.define('menu', {
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    allowNull: false,
-    primaryKey: true
-  },
-  meals: {
-    type: Sequelize.JSON,
-    allowNull: false
-  },
-  catererId: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  createdAt: Sequelize.DATEONLY,
-  updatedAt: Sequelize.DATEONLY
-});
-
-export default Menu;
+export default menu;
