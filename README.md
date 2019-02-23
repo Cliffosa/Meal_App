@@ -1,5 +1,7 @@
 # Meal_App
 
+[![Build Status](https://travis-ci.org/Cliffosa/Meal_App.svg?branch=master)](https://travis-ci.org/Cliffosa/Meal_App)
+
 ## Prerequisites
 
 The following tools will be needed to run this application successfully:
