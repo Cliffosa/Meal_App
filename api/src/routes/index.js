@@ -26,3 +26,61 @@ router.put('/api/v1/orders/:id', orderController.updateOrder);
 router.delete('/api/v1/orders/:id', orderController.deleteOrder);
 
 export default router;
+
+//   // Test to get single meal record
+//   it('should get a SINGLE meal on /meal GET', done => {
+//     const id = 1;
+//     chai
+//       .request(server)
+//       .get(`api/v1/meals/${id}`)
+//       .end((err, res) => {
+//         res.should.have.status(200);
+//         res.body.should.be.a('object');
+//         res.body.should.have.property('name');
+//         res.body.should.have.property('price');
+//         res.body.should.have.property('quantity');
+//         done();
+//       });
+//   });
+
+//   it('should update a SINGLE meal on /meal PUT', done => {
+//     const id = req.params;
+//     let meal = {
+//       name: 'wheat',
+//       quantity: 5,
+//       price: 580
+//     };
+//     chai
+//       .request(server)
+//       .put(`api/v1/meals${id}`)
+//       .send(meal)
+//       .end((err, res) => {
+//         res.should.have.status(201);
+//         res.body.should.be.a('object');
+//         res.body.should.have.property('name');
+//         res.body.should.have.property('price');
+//         res.body.should.have.property('quantity');
+//         done();
+//       });
+//   });
+//   // Test to delete a single meal record
+//   it('should delete a SINGLE meal on /meal DELETE', done => {
+//     const id = 2;
+//     chai
+//       .request(server)
+//       .delete(`ap1/v1/meals${id}`)
+//       .end((err, res) => {
+//         res.should.have.status(200);
+//         res.should.be.json;
+//         res.body.should.be.a('object');
+//         res.body.should.have.property('REMOVED');
+//         res.body.REMOVED.should.be.a('object');
+//         res.body.REMOVED.should.have.property('name');
+//         res.body.REMOVED.should.have.property('id');
+//         res.body.REMOVED.name.should.equal('price');
+//         res.body.REMOVED.name.should.equal('quantity');
+//         done();
+//       });
+//   });
+//   //
+// });
