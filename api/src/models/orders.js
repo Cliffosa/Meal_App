@@ -3,19 +3,19 @@ const orders = [
     id: 1,
     name: 'rice',
     price: 399,
-    quantity: '2'
+    quantity: 'small'
   },
   {
     id: 2,
     name: 'rice',
     price: 399,
-    quantity: '3'
+    quantity: 'medium'
   },
   {
     id: 3,
     name: 'rice',
     price: 500,
-    quantity: '1'
+    quantity: 'large'
   }
 ];
 
