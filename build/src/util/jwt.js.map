@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../api/src/util/jwt.js"],"names":["jwtSecret","process","env","JWT_SECRET"],"mappings":";;;;;;;AAAA;;AAEA;AAEA,IAAMA,SAAS,GAAGC,OAAO,CAACC,GAAR,CAAYC,UAA9B;eAEeH,S","sourcesContent":["import { config } from 'dotenv';\r\n\r\nconfig();\r\n\r\nconst jwtSecret = process.env.JWT_SECRET;\r\n\r\nexport default jwtSecret;\r\n"],"file":"jwt.js"}
