@@ -7,7 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "node ./build/src/api/app.js",
+    "start": "node build/app.js",
     "build": "babel -d ./build ./api -s",
     "dev-start": "nodemon --exec babel-node api/src/app.js",
     "test": "./node_modules/.bin/mocha --timeout 100000 --recursive --require @babel/register --require @babel/polyfill  api/test/*.js --exit"

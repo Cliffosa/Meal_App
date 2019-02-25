@@ -20,3 +20,22 @@ The following tools will be needed to run this application successfully:
 - GET **api/v1/orders** Get All Orders
 - POST **api/v1/orders** Users can make orders
 - PUT **api/v1/orders/:id** Users can modify their orders
+
+- Installation
+- On your Local Machine
+
+- Pull the development branch off this repository
+
+- Run npm install to install all dependencies
+
+- Run npm run dev-start to start the app
+
+- Access endpoints on localhost:5000
+
+- Built With
+
+- Node.js - Runtime-Enviroment
+
+- Authors
+
+- Clifford Okoro
