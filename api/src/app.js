@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 });
 
 // assigned port variable
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 // call app to listen to the port
 app.listen(PORT, () => {
   console.log(`App listening to port ${PORT}`);
