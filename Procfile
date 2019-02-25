@@ -1,1 +1,1 @@
-web: babel/node ./src/app.js
+web: babel/node .build/api/src/app.js
