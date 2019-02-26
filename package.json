@@ -10,7 +10,7 @@
     "start": "node build/src/app.js",
     "build": "babel -d ./build ./api -s",
     "dev-start": "nodemon --exec babel-node api/src/app.js",
-    "test": " --require @babel/register --require @babel/polyfill nyc ./node_modules/.bin/mocha --timeout 100000 --recursive  api/test/*.js --exit",
+    "test": "nyc ./node_modules/.bin/mocha --timeout 100000 --recursive --require @babel/register --require @babel/polyfill  api/test/*.js --exit",
     "coveralls": "nyc report --reporter=lcov --reporter=text-lcov | coveralls"
   },
   "author": "Clifford Okoro",
