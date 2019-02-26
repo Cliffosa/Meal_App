@@ -9,6 +9,8 @@
   "scripts": {
     "start": "node build/src/app.js",
     "build": "babel -d ./build ./api -s",
+    "cover": "istanbul cover _mocha",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "dev-start": "nodemon --exec babel-node api/src/app.js",
     "test": "./node_modules/.bin/mocha --timeout 100000 --recursive --require @babel/register --require @babel/polyfill  api/test/*.js --exit"
   },
@@ -31,6 +33,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.0",
+    "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
     "mocha-lcov-reporter": "^1.3.0",
     "nodemon": "^1.18.10",
