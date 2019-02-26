@@ -33,7 +33,7 @@ describe('/Get all Orders Endpoint Tests', () => {
       .send(order)
       .end((err, res) => {
         expect(200);
-        expect(res.body).to.be.an('object');
+        expect(order).to.be.an('object');
         expect(order).to.have.property('name');
         expect(order).to.have.property('price');
         expect(order).to.have.property('quantity');
@@ -54,7 +54,7 @@ describe('/Get all Orders Endpoint Tests', () => {
       .get(`api/v1/orders/${order.id}`)
       .end((err, res) => {
         expect(200);
-        expect(res.body).to.be.an('object');
+        expect(order).to.be.an('object');
         expect(order).to.have.property('name');
         expect(order).to.have.property('price');
         expect(order).to.have.property('quantity');
@@ -74,7 +74,7 @@ describe('/Get all Orders Endpoint Tests', () => {
       .put(`api/v1/orders/${updateOrder.id}`)
       .end((err, res) => {
         expect(201);
-        expect(res.body).to.be.an('object');
+        expect(updateOrder).to.be.an('object');
         expect(updateOrder).to.have.property('name');
         expect(updateOrder).to.have.property('price');
         expect(updateOrder).to.have.property('quantity');
