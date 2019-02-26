@@ -19,7 +19,7 @@ describe('/Get all MENU Endpoint Tests', () => {
       .end((err, res) => {
         expect(meal).to.have.property('day');
         expect(res.body).to.be.an('object');
-        done(err);
+        done();
       });
   });
 
@@ -40,7 +40,7 @@ describe('/Get all MENU Endpoint Tests', () => {
         expect(meal).to.have.property('name');
         expect(meal).to.have.property('meal');
         expect(meal).to.have.property('day');
-        done(err);
+        done();
       });
   });
 });

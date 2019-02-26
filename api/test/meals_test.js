@@ -37,7 +37,7 @@ describe('/Get all Meals Endpoint Tests', () => {
         expect(meal).to.have.property('name');
         expect(meal).to.have.property('price');
         expect(meal).to.have.property('quantity');
-        done(err);
+        done();
       });
   });
 
@@ -58,7 +58,7 @@ describe('/Get all Meals Endpoint Tests', () => {
         expect(singleMeal).to.have.property('name');
         expect(singleMeal).to.have.property('price');
         expect(singleMeal).to.have.property('quantity');
-        done(err);
+        done();
       });
   });
 
@@ -78,7 +78,7 @@ describe('/Get all Meals Endpoint Tests', () => {
         expect(updateData).to.have.property('name');
         expect(updateData).to.have.property('price');
         expect(updateData).to.have.property('quantity');
-        done(err);
+        done();
       });
   });
 
@@ -94,7 +94,7 @@ describe('/Get all Meals Endpoint Tests', () => {
       .delete(`api/v1/meals/${updateData.id}`)
       .end((err, res) => {
         expect(201);
-        done(err);
+        done();
       });
   });
 });
