@@ -8,4 +8,4 @@ before_install: cd ./api
 script:
   - npm test
 after_success:
-  - npm run coveralls:push
+  - npm run coverage
