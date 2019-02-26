@@ -31,6 +31,8 @@ The following tools will be needed to run this application successfully:
 
 - Run npm run dev-start to start the app
 
+- Run npm test to run test
+
 - Access endpoints on localhost:5000
 
 - Built With
