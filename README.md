@@ -1,6 +1,6 @@
 # Meal_App
 
-[![Build Status](https://travis-ci.com/Cliffosa/Meal_App.svg?branch=develop)](https://travis-ci.com/Cliffosa/Meal_App)
+[![Build Status](https://travis-ci.com/Cliffosa/Meal_App.svg?branch=master)](https://travis-ci.com/Cliffosa/Meal_App)
 [![Coverage Status](https://coveralls.io/repos/github/Cliffosa/Meal_App/badge.svg?branch=master)](https://coveralls.io/github/Cliffosa/Meal_App?branch=master)
 
 ## Prerequisites
