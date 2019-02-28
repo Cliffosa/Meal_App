@@ -3,15 +3,15 @@ import bodyParser from 'body-parser';
 import router from '../src/routes/index';
 
 // DATABASE;
-// import db from './util/db';
-// //TEST DB
-// db.authenticate()
-//   .then(() => {
-//     console.log('Connection has been established successfully.');
-//   })
-//   .catch(err => {
-//     console.error('Unable to connect to the database:', err);
-//   });
+import db from './util/db';
+//TEST DB
+db.authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 // initialize express
 const app = express();

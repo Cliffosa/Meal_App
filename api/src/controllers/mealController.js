@@ -101,16 +101,13 @@ class mealsController {
         message: 'price is required'
       });
     }
-
     const newMeal = {
       id: mealFound.id,
       name: req.body.name || mealFound.name,
       quantity: req.body.quantity || mealFound.quantity,
       price: req.body.price || mealFound.price
     };
-
     meals.splice(itemIndex, 1, newMeal);
-
     return res.status(201).send({
       success: true,
       message: 'meal updated successfully',
