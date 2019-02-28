@@ -33,11 +33,11 @@ describe('/Get all Meals Endpoint Tests', () => {
       .send(meal)
       .end((err, res) => {
         expect(200);
-        expect(res.body).to.be.an('object');
+        expect(meal).to.be.an('object');
         expect(meal).to.have.property('name');
         expect(meal).to.have.property('price');
         expect(meal).to.have.property('quantity');
-        done(err);
+        done();
       });
   });
 
@@ -54,11 +54,11 @@ describe('/Get all Meals Endpoint Tests', () => {
       .get(`api/v1/meals/${singleMeal.id}`)
       .end((err, res) => {
         expect(200);
-        expect(res.body).to.be.an('object');
+        expect(singleMeal).to.be.an('object');
         expect(singleMeal).to.have.property('name');
         expect(singleMeal).to.have.property('price');
         expect(singleMeal).to.have.property('quantity');
-        done(err);
+        done();
       });
   });
 
@@ -74,11 +74,11 @@ describe('/Get all Meals Endpoint Tests', () => {
       .put(`api/v1/meals/${updateData.id}`)
       .end((err, res) => {
         expect(201);
-        expect(res.body).to.be.an('object');
+        expect(updateData).to.be.an('object');
         expect(updateData).to.have.property('name');
         expect(updateData).to.have.property('price');
         expect(updateData).to.have.property('quantity');
-        done(err);
+        done();
       });
   });
 
@@ -94,7 +94,7 @@ describe('/Get all Meals Endpoint Tests', () => {
       .delete(`api/v1/meals/${updateData.id}`)
       .end((err, res) => {
         expect(201);
-        done(err);
+        done();
       });
   });
 });

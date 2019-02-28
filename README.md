@@ -1,6 +1,7 @@
 # Meal_App
 
-[![Build Status](https://travis-ci.org/Cliffosa/Meal_App.svg?branch=master)](https://travis-ci.org/Cliffosa/Meal_App)
+[![Build Status](https://travis-ci.com/Cliffosa/Meal_App.svg?branch=develop)](https://travis-ci.com/Cliffosa/Meal_App)
+[![Coverage Status](https://coveralls.io/repos/github/Cliffosa/Meal_App/badge.svg?branch=master)](https://coveralls.io/github/Cliffosa/Meal_App?branch=develop)
 
 ## Prerequisites
 
@@ -29,6 +30,8 @@ The following tools will be needed to run this application successfully:
 - Run npm install to install all dependencies
 
 - Run npm run dev-start to start the app
+
+- Run npm test to run test
 
 - Access endpoints on localhost:5000
 
