@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.com/Cliffosa/Meal_App.svg?branch=develop)](https://travis-ci.com/Cliffosa/Meal_App)
 [![Coverage Status](https://coveralls.io/repos/github/Cliffosa/Meal_App/badge.svg?branch=master)](https://coveralls.io/github/Cliffosa/Meal_App?branch=develop)
+[![Maintainability](https://api.codeclimate.com/v1/badges/729c1d09f27c491af278/maintainability)](https://codeclimate.com/github/Cliffosa/Meal_App/maintainability)
 
 ## Prerequisites
 
