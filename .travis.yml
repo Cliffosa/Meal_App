@@ -12,5 +12,5 @@ install:
 after_success:
   - npm run coverage
 env:
-global:
-  - CODECLIMATE_REPO_TOKEN=c46158de487f3178f23151cf4af5fbe83779d523d09fbd5f124474614be1b147
+  global:
+    - CODECLIMATE_REPO_TOKEN=c46158de487f3178f23151cf4af5fbe83779d523d09fbd5f124474614be1b147
