@@ -1,7 +1,5 @@
 import menu from '../models/menu';
-
 class menuControllers {
-  // method to get all menu
   getTodayMenu(req, res) {
     const { day } = req.params;
     let todayMenu = [];
@@ -24,10 +22,7 @@ class menuControllers {
       message: 'Sorry, no menu for today'
     });
   }
-
-  // create a menu for a specific day
   createMenu(req, res) {
-    // validate body
     if (!req.body.name) {
       return res.status(400).send({
         success: false,
@@ -52,7 +47,5 @@ class menuControllers {
     });
   }
 }
-
-// create an instance of the class and export it
 const menuController = new menuControllers();
 export default menuController;
