@@ -1,6 +1,4 @@
 import orders from '../models/orders';
-import menu from '../models/menu';
-
 class ordersController {
   getAllOrders(req, res) {
     return res.status(200).send({
@@ -9,7 +7,6 @@ class ordersController {
       meals: orders
     });
   }
-
   createOrder(req, res) {
     if (!req.body.name) {
       return res.status(400).send({
@@ -40,8 +37,6 @@ class ordersController {
       meals: order
     });
   }
-
-  // get a single order
   getOrder(req, res) {
     let found = false;
     const id = parseInt(req.params.id, 10);
@@ -61,10 +56,7 @@ class ordersController {
         message: 'Order does not exist'
       });
     }
-    // check for invalid meal id and return false
   }
-
-  // update a meal
   updateOrder(req, res) {
     const id = parseInt(req.params.id, 10);
     let orderFound;
@@ -75,14 +67,12 @@ class ordersController {
         itemIndex = index;
       }
     });
-
     if (!orderFound) {
       return res.status(404).send({
         success: false,
         message: 'meal not found'
       });
     }
-    // validate body
     if (!req.body.name) {
       return res.status(400).send({
         success: false,
@@ -115,8 +105,6 @@ class ordersController {
       }
     });
   }
-
-  // delete a meal
   deleteOrder(req, res) {
     const id = parseInt(req.params.id, 10);
     let orderFound;
@@ -127,7 +115,6 @@ class ordersController {
         itemIndex = index;
       }
     });
-
     if (!orderFound) {
       return res.status(404).send({
         success: false,
@@ -135,14 +122,11 @@ class ordersController {
       });
     }
     orders.splice(itemIndex, 1);
-
     return res.status(200).send({
       success: true,
       message: 'order deleted successfuly'
     });
   }
 }
-
-// create an instance of the class and export it
 const orderController = new ordersController();
 export default orderController;
