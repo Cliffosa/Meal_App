@@ -1,20 +1,20 @@
 const menu = [
   {
     id: 1,
-    name: 'Appetizer',
-    price: 300,
+    name: 'africana',
+    meal: 'semo',
     day: 'monday'
   },
   {
     id: 2,
-    name: 'Africana',
-    price: 450,
+    name: 'chinise chip',
+    meal: 'garri',
     day: 'friday'
   },
   {
     id: 3,
-    name: 'Chinise Chips',
-    price: 100,
+    name: 'grind salad',
+    meal: 'fufu',
     day: 'monday'
   }
 ];

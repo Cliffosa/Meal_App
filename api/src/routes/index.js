@@ -15,13 +15,14 @@ router.delete('/api/v1/meals/:id', mealController.deleteMeal);
 
 // Menu routes
 
-router.get('/api/v1/menu/:day', menuController.getAllMenu);
+router.get('/api/v1/menu/:day', menuController.getTodayMenu);
 router.post('/api/v1/menu', menuController.createMenu);
 
 // order routes
-
-router.get('/api/v1/order', orderController.getAllOrders);
-router.get('/api/v1/order/:id', orderController.getOrder);
-router.post('/api/v1/order', orderController.createOrder);
+router.get('/api/v1/orders', orderController.getAllOrders);
+router.post('/api/v1/orders', orderController.createOrder);
+router.get('/api/v1/orders/:id', orderController.getOrder);
+router.put('/api/v1/orders/:id', orderController.updateOrder);
+router.delete('/api/v1/orders/:id', orderController.deleteOrder);
 
 export default router;

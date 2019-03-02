@@ -1,22 +1,22 @@
-const meal = [
+const meals = [
   {
     id: 1,
-    name: 'Rice',
-    quantity: 'Small',
-    price: 200
+    name: 'rice',
+    price: 400,
+    quantity: 'small'
   },
   {
     id: 2,
-    name: 'Rice and Beans',
-    quantity: 'Medium',
-    price: 300
+    name: 'beans',
+    price: 400,
+    quantity: 'large'
   },
   {
     id: 3,
-    name: 'Bread',
-    quantity: 'Large',
-    price: 400
+    name: 'platain',
+    price: 400,
+    quantity: 'medium'
   }
 ];
 
-export default meal;
+export default meals;
