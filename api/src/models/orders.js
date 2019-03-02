@@ -1,19 +1,22 @@
-const order = [
+const orders = [
   {
     id: 1,
-    name: 'beans',
-    serve: '5'
+    name: 'rice',
+    price: 399,
+    quantity: 'small'
   },
   {
     id: 2,
     name: 'rice',
-    serve: '3'
+    price: 399,
+    quantity: 'medium'
   },
   {
     id: 3,
-    name: 'bread',
-    serve: '3'
+    name: 'rice',
+    price: 500,
+    quantity: 'large'
   }
 ];
 
-export default order;
+export default orders;

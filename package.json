@@ -1,0 +1,60 @@
+{
+  "name": "mealbookingapp",
+  "version": "1.0.0",
+  "description": "A simple meal booking app",
+  "engines": {
+    "node": "8.11.4"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node build/src/app.js",
+    "build": "babel -d ./build ./api -s",
+    "dev-start": "nodemon --exec babel-node api/src/app.js",
+    "test": " nyc mocha --timeout 100000 --require @babel/register api/test/*.js --exit || true",
+    "generate-lcov": "nyc report — reporter=text-lcov > lcov.info",
+    "coveralls-coverage": "coveralls < lcov.info",
+    "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
+    "coverage": "nyc npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage"
+  },
+  "author": "Clifford Okoro",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.3",
+    "@babel/node": "^7.2.2",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.0.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "codeclimate-test-reporter": "^0.5.1",
+    "coveralls": "^3.0.3",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.2.0",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nodemon": "^1.18.10",
+    "nyc": "^13.3.0",
+    "prettier": "^1.16.4"
+  },
+  "dependencies": {
+    "@babel/helpers": "^7.3.1",
+    "babel-core": "^7.0.0-bridge.0",
+    "bcrypt": "^3.0.4",
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "express-fileupload": "^1.1.1-alpha.3",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.0",
+    "morgan": "^1.9.1",
+    "pg": "^7.8.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.42.0"
+  }
+}
