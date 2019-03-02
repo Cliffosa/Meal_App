@@ -5,13 +5,6 @@ import router from '../src/routes/index';
 // DATABASE;
 import db from './util/db';
 //TEST DB
-db.authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
 
 // initialize express
 const app = express();
@@ -30,9 +23,17 @@ app.get('/', (req, res) => {
 
 // assigned port variable
 const PORT = process.env.PORT || 5000;
+
+db.sync()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`App listening to port ${PORT}`);
+    });
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 // call app to listen to the port
-app.listen(PORT, () => {
-  console.log(`App listening to port ${PORT}`);
-});
 
 export default app;
