@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import sequelize from '../util/db';
 
-const Caterer = sequelize.define('caterer', {
+const Admin = sequelize.define('caterer', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -29,4 +29,4 @@ const Caterer = sequelize.define('caterer', {
   updatedAt: Sequelize.DATEONLY
 });
 
-export default Caterer;
+export default Admin;
