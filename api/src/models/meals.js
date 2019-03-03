@@ -1,22 +1,35 @@
-const meals = [
-  {
-    id: 1,
-    name: 'rice',
-    price: 400,
-    quantity: 'small'
-  },
-  {
-    id: 2,
-    name: 'beans',
-    price: 400,
-    quantity: 'large'
-  },
-  {
-    id: 3,
-    name: 'platain',
-    price: 400,
-    quantity: 'medium'
-  }
-];
+import Sequelize from 'sequelize';
+import sequelize from '../util/db';
 
-export default meals;
+const Meal = sequelize.define('meal', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  price: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  quantity: {
+    type: Sequelize.INTEGER,
+    default: null
+  },
+  imageUrl: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  adminId: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  createdAt: Sequelize.DATEONLY,
+  updatedAt: Sequelize.DATEONLY
+});
+
+export default Meal;
