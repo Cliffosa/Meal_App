@@ -1,132 +1,96 @@
-import orders from '../models/orders';
-class ordersController {
-  getAllOrders(req, res) {
-    return res.status(200).send({
-      success: true,
-      message: 'orders retrieved successfully',
-      meals: orders
-    });
-  }
-  createOrder(req, res) {
-    if (!req.body.name) {
-      return res.status(400).send({
-        success: false,
-        message: 'name is required'
-      });
-    } else if (!req.body.price) {
-      return res.status(400).send({
-        success: false,
-        message: 'quantity is required'
-      });
-    } else if (!req.body.quantity) {
-      return res.status(400).send({
-        success: false,
-        message: 'price is required'
-      });
-    }
-    const order = {
-      id: orders.length + 1,
-      name: req.body.name,
-      price: req.body.price,
-      quantity: req.body.quantity
-    };
-    orders.push(order);
-    return res.status(200).send({
-      success: true,
-      message: 'order  sucessfully created.',
-      meals: order
-    });
-  }
-  getOrder(req, res) {
-    let found = false;
-    const id = parseInt(req.params.id, 10);
-    orders.map(order => {
-      if (order.id === id) {
-        found = true;
-        return res.status(200).send({
-          success: true,
-          message: 'order retrieved successfully',
-          order
-        });
-      }
-    });
-    if (!found) {
-      return res.status(404).send({
-        success: false,
-        message: 'Order does not exist'
-      });
-    }
-  }
-  updateOrder(req, res) {
-    const id = parseInt(req.params.id, 10);
-    let orderFound;
-    let itemIndex;
-    orders.map((order, index) => {
-      if (order.id === id) {
-        orderFound = order;
-        itemIndex = index;
-      }
-    });
-    if (!orderFound) {
-      return res.status(404).send({
-        success: false,
-        message: 'meal not found'
-      });
-    }
-    if (!req.body.name) {
-      return res.status(400).send({
-        success: false,
-        message: 'name is required'
-      });
-    } else if (!req.body.quantity) {
-      return res.status(400).send({
-        success: false,
-        message: 'quantity is required'
-      });
-    } else if (!req.body.price) {
-      return res.status(400).send({
-        success: 'false',
-        message: 'price is required'
-      });
-    }
-    const newOrder = {
-      id: orderFound.id,
-      name: req.body.name || orderFound.name,
-      quantity: req.body.quantity || orderFound.quantity,
-      price: req.body.price || orderFound.price
-    };
-    orders.splice(itemIndex, 1, newOrder);
+import Order from '../models/orders';
+import OrderItem from '../models/orderItems';
+import Meal from '../models/meal';
+import Menu from '../models/menu';
 
-    return res.status(201).send({
-      success: true,
-      message: 'order updated successfully',
-      createOrder: {
-        data: newOrder
+class ordersController {
+  createOrder(req, res) {
+    try {
+      const { mealId, quantity } = req.body;
+      const orderItem = OrderItem.findOne({ where: { mealId, userId: req.user.id } });
+      const result = {};
+      // check order exist
+      if (orderItem) {
+        result.body = {
+          status: false,
+          message: 'Orders Already Exist!!!'
+        };
+      } else {
+        // create new order
+        const newOrderItem = OrderItem.create({ mealId, quantity, userId: req.user.id });
+        result.body = {
+          status: true,
+          message: 'Order Sucessfully Added!',
+          createdOrder: newOrderItem
+        };
       }
-    });
-  }
-  deleteOrder(req, res) {
-    const id = parseInt(req.params.id, 10);
-    let orderFound;
-    let itemIndex;
-    orders.map((order, index) => {
-      if (order.id === id) {
-        orderFound = order;
-        itemIndex = index;
-      }
-    });
-    if (!orderFound) {
-      return res.status(404).send({
-        success: false,
-        message: 'order not found'
+      return res.status(201).json(result.body);
+    } catch (error) {
+      return res.status(500).json({
+        status: 'error creating order',
+        message: error.message
       });
     }
-    orders.splice(itemIndex, 1);
-    return res.status(200).send({
-      success: true,
-      message: 'order deleted successfuly'
-    });
+  }
+  getOrders(req, res) {
+    try {
+      const orders = Order.findAll({ where: { adminId: req.admin.id } });
+      return res.status(200).json({
+        status: true,
+        message: 'Orders Retrieved Successfully!',
+        fetchData: orders
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 'error fetching orders',
+        message: error.message
+      });
+    }
+  }
+
+  modifyOrder(req, res) {
+    try {
+      const { orderId } = req.params;
+      const { action } = req.body;
+      const orderItem = OrderItem.findOne({
+        where: { id: orderId, userId: req.user.id },
+        include: [Meal]
+      });
+      if (action === 'increase') {
+        orderItem.quantity++;
+        if (orderItem.quantity > orderItem.meal.quantity) {
+          throw new Error(
+            `We only have ${orderItem.meal.quantity} of ${orderItem.meal.name} is available`
+          );
+        }
+        OrderItem.update(
+          {
+            quantity: orderItem.quantity
+          },
+          { where: { id: orderItem.id } }
+        );
+      } else if (action === 'decrease') {
+        orderItem.quantity--;
+        if (orderItem.quantity === 0) {
+          OrderItem.destroy({ where: { id: orderItem.id } });
+        } else {
+          OrderItem.update({ quantity: orderItem.quantity }, { where: { id: orderItem.id } });
+        }
+      } else if (action === 'delete') {
+        OrderItem.destroy({ where: { id: orderItem.id } });
+      }
+      return res.status(200).json({
+        status: true,
+        message: 'Order Updated Successfully'
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: flase,
+        message: error.message
+      });
+    }
   }
 }
+
 const orderController = new ordersController();
 export default orderController;
