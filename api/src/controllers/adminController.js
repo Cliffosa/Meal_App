@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import Caterer from '../models/admin';
+import Admin from '../models/admin';
 import secret from '../util/jwt';
 
 class AdminController {

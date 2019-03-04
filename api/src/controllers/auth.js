@@ -39,7 +39,7 @@ class AuthController {
       const decodedToken = await jwt.verify(jwtTokenKey, secret);
       //check isAdmin
       if (!decodedToken.isAdmin) {
-        throw new Error('Unauthorized Access');
+        throw new Error('Access Denied');
       }
       req.admin = decodedToken.admin;
       next();
@@ -47,7 +47,7 @@ class AuthController {
     } catch (err) {
       return res.status(401).json({
         status: 'error getting token',
-        message: 'Unauthorized Access'
+        message: 'Access Denied'
       });
     }
   }
