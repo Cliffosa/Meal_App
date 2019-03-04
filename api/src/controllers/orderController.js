@@ -208,8 +208,8 @@ class ordersController {
           total: adminTotal,
           delivery_address: delivery_address,
           adminId: admin,
-          userId
-          status:0
+          userId,
+          status: 0
         });
       });
     } catch (error) {
