@@ -3,7 +3,7 @@ import OrderItem from '../models/orderItems';
 import Meal from '../models/meals';
 import Menu from '../models/menu';
 
-class ordersController {
+class OrdersController {
   addMealToOder(req, res) {
     try {
       const { mealId, quantity } = req.body;
@@ -49,7 +49,7 @@ class ordersController {
     }
   }
 
-  modifyOrder(req, res) {
+  updateOrder(req, res) {
     try {
       const { orderId } = req.params;
       const { action } = req.body;
@@ -218,5 +218,4 @@ class ordersController {
   }
 }
 
-const orderController = new ordersController();
-export default orderController;
+export default OrdersController;

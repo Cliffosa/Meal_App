@@ -4,11 +4,11 @@ import Admin from '../models/admin';
 import secret from '../util/jwt';
 
 class AdminController {
-  async registerAdmin(req, res) {
+  registerAdmin(req, res) {
     try {
       const { name, email, phone, password } = req.body;
-      const hash = await bcrypt.hash(password, 8);
-      const admin = await Admin.create({
+      const hash = bcrypt.hash(password, 8);
+      const admin = Admin.create({
         name,
         email,
         phone,
@@ -44,14 +44,14 @@ class AdminController {
       });
     }
   }
-  async loginAdmin(req, res) {
+  loginAdmin(req, res) {
     try {
       const { email, password } = req.body;
-      const admin = await Admin.findOne({ where: { email } });
+      const admin = Admin.findOne({ where: { email } });
       if (!admin) {
         throw new Error('Admin with that email does not macth our record or exist');
       }
-      const result = await bcrypt.compare(password, caterer.password);
+      const result = bcrypt.compare(password, caterer.password);
       if (!result) {
         throw new Error('Log In Information does not match our records');
       }

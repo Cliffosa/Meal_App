@@ -1,7 +1,7 @@
 import fs from 'fs';
 import Meal from '../models/meals';
 
-class mealsController {
+class MealsController {
   createMeal(req, res) {
     try {
       const { name, price } = req.body;
@@ -43,27 +43,6 @@ class mealsController {
     }
   }
 
-  // getMeal(req, res) {
-  //   let found = false;
-  //   const id = parseInt(req.params.id, 10);
-  //   meals.map(meal => {
-  //     if (meal.id === id) {
-  //       found = true;
-  //       return res.status(200).send({
-  //         success: true,
-  //         message: 'meal retrieved successfully',
-  //         meal
-  //       });
-  //     }
-  //   });
-  //   if (!found) {
-  //     return res.status(404).send({
-  //       success: false,
-  //       message: 'meal does not exist'
-  //     });
-  //   }
-  // }
-
   updateMeal(req, res) {
     try {
       const meal = Meal.findOne({ where: { id: req.params.id } });
@@ -91,14 +70,16 @@ class mealsController {
         const { image } = req.files;
         const imageUrl = `/api/src/images/${image.name}`;
         fs.unlink(`.${meal.imageUrl}`, error => {
-          if (error) throw new Error(error.message);
+          if (error) {
+            throw new Error(error.message);
+          }
         });
-        mealUpdate.imageUrl = imageUrl;
+        mealUpdate.imageUrl;
         image.mv(`.${imageUrl}`);
       } else {
-        mealUpdate.imageUrl = meal.imageUrl;
+        mealUpdate.imageUrl;
       }
-      const { name, price, imageUrl } = mealUpdate;
+      const { imageUrl } = mealUpdate;
       Meal.update({ name, price, imageUrl }, { where: { id: req.params.id } });
       return res.status(200).json({
         status: true,
@@ -132,5 +113,5 @@ class mealsController {
     }
   }
 }
-const mealController = new mealsController();
-export default mealController;
+
+export default MealsController;

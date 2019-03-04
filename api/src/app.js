@@ -15,6 +15,7 @@ app.get('/', (req, res) => {
     message: `Welcome To Book-A-Meal-App Book-A-Meal is an application that allows customers to make food orders and helps the foodvendor know what the customers want to eat.`
   });
 });
+
 const PORT = process.env.PORT || 8000;
 
 sequelize
