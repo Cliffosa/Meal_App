@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-class UserPolicy {
+class UserMiddleware {
   validateRegister(req, res, next) {
     const schema = {
       name: Joi.string().required(),
@@ -82,4 +82,4 @@ class UserPolicy {
   }
 }
 
-export default UserPolicy;
+export default UserMiddleware;
