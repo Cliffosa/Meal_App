@@ -4,7 +4,7 @@ import Meal from '../models/meal';
 import Menu from '../models/menu';
 
 class ordersController {
-  createOrder(req, res) {
+  addMealToOder(req, res) {
     try {
       const { mealId, quantity } = req.body;
       const orderItem = OrderItem.findOne({ where: { mealId, userId: req.user.id } });
@@ -32,6 +32,7 @@ class ordersController {
       });
     }
   }
+
   getOrders(req, res) {
     try {
       const orders = Order.findAll({ where: { adminId: req.admin.id } });
@@ -88,6 +89,130 @@ class ordersController {
         status: flase,
         message: error.message
       });
+    }
+  }
+
+  getOrderItems(req, res) {
+    try {
+      const orderItems = OrderItem.findAll({
+        where: { userId: req.user.id },
+        include: [Meal]
+      });
+      if (!orderItems) {
+        throw new Error('No order for this user!');
+      }
+      const meals = [];
+      let total = 0;
+      orderItems.map(orderItem => {
+        //@todo forEach
+        const orderMeal = { ...orderItem };
+        orderMeal.meal.quantity = orderItem.quantity;
+        meals.push(orderMeal.meal);
+        let resultOrder = orderItem.quantity * orderMeal.meal.price;
+        total += resultOrder;
+      });
+      const order = { meals, total };
+      return res.status(200).json({
+        status: true,
+        message: 'Orders Retrieved Successfully',
+        fetchData: order
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 'error fetching order',
+        message: error.message
+      });
+    }
+  }
+
+  checkoutOrder(req, res) {
+    try {
+      const orderItems = OrderItem.findAll({
+        where: { userId: req.user.id },
+        include: [Meal]
+      });
+      const meals = [];
+      const admins = new Set();
+      orderItems.map(orderItem => {
+        //@todo forEach
+        const orderMeal = { ...orderItem };
+        orderMeal.meal.quantity = orderItem.quantity;
+        meals.push(orderMeal.meal);
+        admins.add(orderMeal.meal.adminId);
+      });
+      ordersController.reduceQuantity(meals);
+      OrderItem.destroy({ where: { userId: req.user.id } });
+      ordersController.createOrders(admins, meals, req.body.delivery_address, req.user.id);
+      return res.status(201).json({
+        status: 'success',
+        message: 'Order Made'
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 'error',
+        message: error.message
+      });
+    }
+  }
+
+  decreaseQuantity(meals) {
+    try {
+      const meal = meals[0];
+      Meal.findOne({ where: { id: meal.id } })
+        .then(dbMeal => {
+          return dbMeal.update(
+            { quantity: dbMeal.quantity - meal.quantity },
+            { where: { id: meal.id } }
+          );
+        })
+        .then(() => {
+          return Menu.findOne({ where: { adminId: meal.adminId } });
+        })
+        .then(menu => {
+          const menuMeals = JSON.parse(menu.meals);
+          const updatedMenuMeals = menuMeals.map(menuMeal => {
+            const updatedMenuMeal = { ...menuMeal };
+            if (menuMeal.id === meal.id) {
+              updatedMenuMeal.quantity -= meal.quantity;
+            }
+            return updatedMenuMeal;
+          });
+          return menu.update(
+            { meals: JSON.stringify(updatedMenuMeals) },
+            { where: { id: menu.id } }
+          );
+        })
+        .then(() => {
+          meals.shift();
+          if (meals.length !== 0) {
+            ordersController.decreaseQuantity(meals);
+          } else {
+            return true;
+          }
+        });
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
+
+  createOrder(admins, meals, delivery_address, userId) {
+    try {
+      admins.map(admin => {
+        let adminTotal = 0;
+        const adminMeals = meals.filter(meal => meal.adminId === admin);
+        adminMeals.map(adminMeal => {
+          adminTotal += adminMeal.quantity * adminMeal.price;
+        });
+        Order.create({
+          order: JSON.stringify(adminMeals),
+          total: adminTotal,
+          delivery_address: delivery_address,
+          adminId: admin,
+          userId
+        });
+      });
+    } catch (error) {
+      throw new Error(error.message);
     }
   }
 }
