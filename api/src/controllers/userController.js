@@ -4,12 +4,12 @@ import User from '../models/user';
 import secret from '../util/jwt';
 
 class UserController {
-  async registerUser(req, res) {
+  registerUser(req, res) {
     try {
       const { name, email, phone, password } = req.body;
-      const hash = await bcrypt.hash(password, 8);
+      const hash = bcrypt.hash(password, 8);
       //pass the hashed password
-      const user = await User.create({ name, email, phone, password: hash });
+      const user = User.create({ name, email, phone, password: hash });
       //declare user without password
       const ordinaryUser = {
         id: user.id,
@@ -37,16 +37,16 @@ class UserController {
     }
   }
 
-  async loginUser(req, res) {
+  loginUser(req, res) {
     try {
       const { email, password } = req.body;
-      const user = await User.findOne({ where: { email } });
+      const user = User.findOne({ where: { email } });
       //check if user exist
       if (!user) {
         throw new Error('User with that email does not exist');
       }
       //compare password
-      const result = await bcrypt.compare(password, user.password);
+      const result = bcrypt.compare(password, user.password);
       if (!result) {
         throw new Error('login information does not match our records');
       }
