@@ -1,6 +1,6 @@
 import Order from '../models/orders';
 import OrderItem from '../models/orderItems';
-import Meal from '../models/meal';
+import Meal from '../models/meals';
 import Menu from '../models/menu';
 
 class ordersController {
