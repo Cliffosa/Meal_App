@@ -209,6 +209,7 @@ class ordersController {
           delivery_address: delivery_address,
           adminId: admin,
           userId
+          status:0
         });
       });
     } catch (error) {
