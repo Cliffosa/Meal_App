@@ -20,7 +20,7 @@ const Order = sequelize.define('order', {
     type: Sequelize.TEXT,
     allowNull: false
   },
-  delivery_status: {
+  status: {
     type: Sequelize.INTEGER,
     default: 0
   },
