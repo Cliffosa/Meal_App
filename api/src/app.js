@@ -1,25 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import router from '../src/routes/index';
+import cors from 'cors';
+import sequelize from './util/db';
 
-// DATABASE;
-import db from './util/db';
-//TEST DB
-db.authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
-
-// initialize express
 const app = express();
-//configure bodyParser for incoming requests data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// use router
+app.use(cors());
 app.use(router);
 
 app.get('/', (req, res) => {
@@ -28,11 +16,18 @@ app.get('/', (req, res) => {
   });
 });
 
-// assigned port variable
-const PORT = process.env.PORT || 5000;
-// call app to listen to the port
-app.listen(PORT, () => {
-  console.log(`App listening to port ${PORT}`);
-});
+const PORT = process.env.PORT || 8000;
+
+sequelize
+  .sync()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`App listening to port ${PORT}`);
+      console.log('Connection has been established successfully.');
+    });
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 export default app;
