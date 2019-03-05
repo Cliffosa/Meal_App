@@ -92,7 +92,7 @@ class OrdersController {
     }
   }
 
- async getOrderItems(req, res) {
+  async getOrderItems(req, res) {
     try {
       const orderItems = await OrderItem.findAll({
         where: { userId: req.user.id },
@@ -166,7 +166,7 @@ class OrdersController {
           );
         })
         .then(() => {
-          return await Menu.findOne({ where: { adminId: meal.adminId } });
+          return Menu.findOne({ where: { adminId: meal.adminId } });
         })
         .then(menu => {
           const menuMeals = JSON.parse(menu.meals);
@@ -195,15 +195,15 @@ class OrdersController {
     }
   }
 
-  async  createOrder(admins, meals, delivery_address, userId) {
+  async createOrder(admins, meals, delivery_address, userId) {
     try {
       admins.map(admin => {
         let adminTotal = 0;
-        const adminMeals = await meals.filter(meal => meal.adminId === admin);
+        const adminMeals = meals.filter(meal => meal.adminId === admin);
         adminMeals.map(adminMeal => {
           adminTotal += adminMeal.quantity * adminMeal.price;
         });
-        await Order.create({
+        Order.create({
           order: JSON.stringify(adminMeals),
           total: adminTotal,
           delivery_address: delivery_address,
