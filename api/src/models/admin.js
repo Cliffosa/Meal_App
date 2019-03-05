@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import sequelize from '../util/db';
 
-const Admin = sequelize.define('caterer', {
+const Admin = sequelize.define('admin', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
