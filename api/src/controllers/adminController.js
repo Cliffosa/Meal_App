@@ -76,12 +76,12 @@ class AdminControllers {
         status: 'success',
         message: 'Welcome admin, Logged In Successfully',
         token: `Bearer ${jwtTokenKey}`,
-        user: ordinaryAdmin
+        admin: ordinaryAdmin
       });
-    } catch (error) {
+    } catch (err) {
       return res.status(500).json({
         status: 'error',
-        message: error.message
+        message: err.message
       });
     }
   }

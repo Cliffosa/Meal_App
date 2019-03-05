@@ -50,7 +50,6 @@ class UsersController {
       if (!result) {
         throw new Error('login information does not match our records');
       }
-      //otherwise register user
       const ordinaryUser = {
         id: user.id,
         name: user.name,

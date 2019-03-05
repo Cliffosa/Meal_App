@@ -45,7 +45,9 @@ router.delete('/api/v1/meals/:id', AuthController.verifyAdminTokenKey, MealsCont
 // Menu routes
 
 router.get('/api/v1/menu/', AuthController.verifyUserTokenKey, MenuControllers.getTodayMenu);
+
 router.get('/api/v1/menu/admin', AuthController.verifyAdminTokenKey, MenuControllers.getSingleMenu);
+
 router.post(
   '/api/v1/menu/',
   AuthController.verifyAdminTokenKey,
