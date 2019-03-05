@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import secret from '../util/jwt';
 
 class AuthController {
-  async verifyUserTokenKey(req, res, next) {
+ static async verifyUserTokenKey(req, res, next) {
     //check and get if token is provided from the header
     const token = req.headers.authorization;
     if (!token) {
@@ -26,7 +26,7 @@ class AuthController {
     }
   }
 
-  async verifyAdminTokenKey(req, res, next) {
+ static async verifyAdminTokenKey(req, res, next) {
     const token = req.headers.authorization;
     if (!token) {
       return res.status(401).json({
