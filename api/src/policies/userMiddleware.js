@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-class UserMiddleware {
+class UsersMiddleware {
   async validateRegister(req, res, next) {
     const schema = {
       name: Joi.string().required(),
@@ -82,4 +82,5 @@ class UserMiddleware {
   }
 }
 
+const UserMiddleware = new UsersMiddleware();
 export default UserMiddleware;

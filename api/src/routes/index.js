@@ -21,7 +21,7 @@ router.post('/api/v1/auth/login', UserMiddleware.validateLogin, UserController.l
 router.post(
   '/api/v1/auth/admin/signup',
   AdminMiddleware.validateRegister,
-  AdminController.registerUser
+  AdminController.registerAdmin
 );
 
 router.post('/api/v1/auth/admin/login', AdminMiddleware.validateLogin, AdminController.loginAdmin);
@@ -30,17 +30,17 @@ router.post('/api/v1/auth/admin/login', AdminMiddleware.validateLogin, AdminCont
 router.get('/api/v1/meals', AuthController.verifyAdminTokenKey, MealsController.getAllMeals);
 router.post(
   '/api/v1/meals',
-  AdminController.verifyAdminTokenKey,
+  AuthController.verifyAdminTokenKey,
   MealMiddleware.validateAddMeal,
-  MealController.createMeal
+  MealsController.createMeal
 );
 router.put(
   '/api/v1/meals/:id',
-  AdminController.verifyAdminTokenKey,
+  AuthController.verifyAdminTokenKey,
   MealMiddleware.validateUpdateMeal,
-  MealController.updateMeal
+  MealsController.updateMeal
 );
-router.delete('/api/v1/meals/:id', AdminController.verifyAdminTokenKey, MealController.deleteMeal);
+router.delete('/api/v1/meals/:id', AuthController.verifyAdminTokenKey, MealsController.deleteMeal);
 
 // Menu routes
 
@@ -57,7 +57,11 @@ router.post(
 
 router.get('/api/v1/orders', AuthController.verifyAdminTokenKey, OrdersController.getOrders);
 
-router.get('/api/v1/orders/user', AuthController.verifyUserToken, OrdersController.getOrderItems);
+router.get(
+  '/api/v1/orders/user',
+  AuthController.verifyUserTokenKey,
+  OrdersController.getOrderItems
+);
 
 router.post(
   '/api/v1/orders',

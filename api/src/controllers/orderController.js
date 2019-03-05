@@ -3,7 +3,7 @@ import OrderItem from '../models/orderItems';
 import Meal from '../models/meals';
 import Menu from '../models/menu';
 
-class OrdersController {
+class OrderController {
   async addMealToOder(req, res) {
     try {
       const { mealId, quantity } = req.body;
@@ -218,4 +218,5 @@ class OrdersController {
   }
 }
 
+const OrdersController = new OrderController();
 export default OrdersController;

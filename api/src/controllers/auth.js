@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 import secret from '../util/jwt';
 
-class AuthController {
- static async verifyUserTokenKey(req, res, next) {
+class AuthControllers {
+  async verifyUserTokenKey(req, res, next) {
     //check and get if token is provided from the header
     const token = req.headers.authorization;
     if (!token) {
@@ -26,7 +26,7 @@ class AuthController {
     }
   }
 
- static async verifyAdminTokenKey(req, res, next) {
+  async verifyAdminTokenKey(req, res, next) {
     const token = req.headers.authorization;
     if (!token) {
       return res.status(401).json({
@@ -53,4 +53,5 @@ class AuthController {
   }
 }
 
+const AuthController = new AuthControllers();
 export default AuthController;

@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-class MealMiddleware {
+class MealsMiddleware {
   async validateAddMealToMenu(req, res, next) {
     try {
       const schema = {
@@ -93,4 +93,5 @@ class MealMiddleware {
   }
 }
 
+const MealMiddleware = new MealsMiddleware();
 export default MealMiddleware;

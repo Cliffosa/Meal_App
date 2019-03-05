@@ -1,6 +1,6 @@
 import Menu from '../models/menu';
 import Meal from '../models/meals';
-class MenuControllers {
+class MenusControllers {
   generateDate() {
     let today = new Date();
     let date = today.getDate();
@@ -113,4 +113,5 @@ class MenuControllers {
   }
 }
 
+const MenuControllers = new MenusControllers();
 export default MenuControllers;

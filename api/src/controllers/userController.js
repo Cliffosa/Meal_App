@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import User from '../models/user';
 import secret from '../util/jwt';
 
-class UserController {
+class UsersController {
   async registerUser(req, res) {
     try {
       const { name, email, phone, password } = req.body;
@@ -76,5 +76,5 @@ class UserController {
     }
   }
 }
-
+const UserController = new UsersController();
 export default UserController;

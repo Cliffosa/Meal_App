@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import Admin from '../models/admin';
 import secret from '../util/jwt';
 
-class AdminController {
+class AdminControllers {
   async registerAdmin(req, res) {
     try {
       const { name, email, phone, password } = req.body;
@@ -87,4 +87,5 @@ class AdminController {
   }
 }
 
+const AdminController = new AdminControllers();
 export default AdminController;

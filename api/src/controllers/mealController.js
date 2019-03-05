@@ -1,7 +1,7 @@
 import fs from 'fs';
 import Meal from '../models/meals';
 
-class MealsController {
+class MealController {
   async createMeal(req, res) {
     try {
       const { name, price } = req.body;
@@ -114,4 +114,5 @@ class MealsController {
   }
 }
 
+const MealsController = new MealController();
 export default MealsController;

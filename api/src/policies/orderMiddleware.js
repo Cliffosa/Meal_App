@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-class OrderMiddleware {
+class OrdersMiddleware {
   async validateAddToOrder(req, res, next) {
     try {
       const schema = {
@@ -72,4 +72,5 @@ class OrderMiddleware {
   }
 }
 
+const OrderMiddleware = new OrdersMiddleware();
 export default OrderMiddleware;
