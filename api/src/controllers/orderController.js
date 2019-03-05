@@ -4,10 +4,10 @@ import Meal from '../models/meals';
 import Menu from '../models/menu';
 
 class OrdersController {
-  addMealToOder(req, res) {
+  async addMealToOder(req, res) {
     try {
       const { mealId, quantity } = req.body;
-      const orderItem = OrderItem.findOne({ where: { mealId, userId: req.user.id } });
+      const orderItem = await OrderItem.findOne({ where: { mealId, userId: req.user.id } });
       const result = {};
       // check order exist
       if (orderItem) {
@@ -17,7 +17,7 @@ class OrdersController {
         };
       } else {
         // create new order
-        const newOrderItem = OrderItem.create({ mealId, quantity, userId: req.user.id });
+        const newOrderItem = await OrderItem.create({ mealId, quantity, userId: req.user.id });
         result.body = {
           status: true,
           message: 'Order Sucessfully Added!',
@@ -33,9 +33,9 @@ class OrdersController {
     }
   }
 
-  getOrders(req, res) {
+  async getOrders(req, res) {
     try {
-      const orders = Order.findAll({ where: { adminId: req.admin.id } });
+      const orders = await Order.findAll({ where: { adminId: req.admin.id } });
       return res.status(200).json({
         status: true,
         message: 'Orders Retrieved Successfully!',
@@ -49,11 +49,11 @@ class OrdersController {
     }
   }
 
-  updateOrder(req, res) {
+  async updateOrder(req, res) {
     try {
       const { orderId } = req.params;
       const { action } = req.body;
-      const orderItem = OrderItem.findOne({
+      const orderItem = await OrderItem.findOne({
         where: { id: orderId, userId: req.user.id },
         include: [Meal]
       });
@@ -92,9 +92,9 @@ class OrdersController {
     }
   }
 
-  getOrderItems(req, res) {
+ async getOrderItems(req, res) {
     try {
-      const orderItems = OrderItem.findAll({
+      const orderItems = await OrderItem.findAll({
         where: { userId: req.user.id },
         include: [Meal]
       });
@@ -125,9 +125,9 @@ class OrdersController {
     }
   }
 
-  checkoutOrder(req, res) {
+  async checkoutOrder(req, res) {
     try {
-      const orderItems = OrderItem.findAll({
+      const orderItems = await OrderItem.findAll({
         where: { userId: req.user.id },
         include: [Meal]
       });
@@ -141,7 +141,7 @@ class OrdersController {
         admins.add(orderMeal.meal.adminId);
       });
       ordersController.reduceQuantity(meals);
-      OrderItem.destroy({ where: { userId: req.user.id } });
+      await OrderItem.destroy({ where: { userId: req.user.id } });
       ordersController.createOrders(admins, meals, req.body.delivery_address, req.user.id);
       return res.status(201).json({
         status: 'success',
@@ -155,10 +155,10 @@ class OrdersController {
     }
   }
 
-  decreaseQuantity(meals) {
+  async decreaseQuantity(meals) {
     try {
       const meal = meals[0];
-      Meal.findOne({ where: { id: meal.id } })
+      await Meal.findOne({ where: { id: meal.id } })
         .then(dbMeal => {
           return dbMeal.update(
             { quantity: dbMeal.quantity - meal.quantity },
@@ -166,7 +166,7 @@ class OrdersController {
           );
         })
         .then(() => {
-          return Menu.findOne({ where: { adminId: meal.adminId } });
+          return await Menu.findOne({ where: { adminId: meal.adminId } });
         })
         .then(menu => {
           const menuMeals = JSON.parse(menu.meals);
@@ -195,15 +195,15 @@ class OrdersController {
     }
   }
 
-  createOrder(admins, meals, delivery_address, userId) {
+  async  createOrder(admins, meals, delivery_address, userId) {
     try {
       admins.map(admin => {
         let adminTotal = 0;
-        const adminMeals = meals.filter(meal => meal.adminId === admin);
+        const adminMeals = await meals.filter(meal => meal.adminId === admin);
         adminMeals.map(adminMeal => {
           adminTotal += adminMeal.quantity * adminMeal.price;
         });
-        Order.create({
+        await Order.create({
           order: JSON.stringify(adminMeals),
           total: adminTotal,
           delivery_address: delivery_address,

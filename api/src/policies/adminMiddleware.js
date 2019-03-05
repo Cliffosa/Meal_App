@@ -2,7 +2,7 @@ import Joi from 'joi';
 import UserMiddleware from './userMiddleware';
 
 class AdminMiddleware extends UserMiddleware {
-  validateRegister(req, res, next) {
+  async validateRegister(req, res, next) {
     try {
       const schema = {
         name: Joi.string().required(),
@@ -16,7 +16,7 @@ class AdminMiddleware extends UserMiddleware {
           .regex(new RegExp('^[a-zA-Z0-9]{8,32}$'))
           .required()
       };
-      Joi.validate(req.body, schema);
+      await Joi.validate(req.body, schema);
       next();
       return true;
     } catch (error) {

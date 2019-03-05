@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 class UserMiddleware {
-  validateRegister(req, res, next) {
+  async validateRegister(req, res, next) {
     const schema = {
       name: Joi.string().required(),
       email: Joi.string()
@@ -14,7 +14,7 @@ class UserMiddleware {
         .regex(new RegExp('^[a-zA-Z0-9]{8,32}$'))
         .required()
     };
-    const { error } = Joi.validate(req.body, schema);
+    const { error } = await Joi.validate(req.body, schema);
     if (error) {
       switch (error.details[0].context.key) {
         case 'email':
@@ -43,7 +43,7 @@ class UserMiddleware {
     }
   }
 
-  validateLogin(req, res, next) {
+  async validateLogin(req, res, next) {
     const schema = {
       email: Joi.string()
         .email()
@@ -52,7 +52,7 @@ class UserMiddleware {
         .regex(new RegExp('^[a-zA-Z0-9]{8,32}$'))
         .required()
     };
-    const { error } = Joi.validate(req.body, schema);
+    const { error } = await Joi.validate(req.body, schema);
     if (error) {
       switch (error.details[0].context.key) {
         case 'email':

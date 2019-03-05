@@ -4,11 +4,11 @@ import Admin from '../models/admin';
 import secret from '../util/jwt';
 
 class AdminController {
-  registerAdmin(req, res) {
+  async registerAdmin(req, res) {
     try {
       const { name, email, phone, password } = req.body;
-      const hash = bcrypt.hash(password, 8);
-      const admin = Admin.create({
+      const hash = await bcrypt.hash(password, 8);
+      const admin = await Admin.create({
         name,
         email,
         phone,
@@ -21,7 +21,7 @@ class AdminController {
         phone: admin.phone
       };
       const ONE_WEEK = 60 * 60 * 24 * 7;
-      const jwtTokenKey = jwt.sign(
+      const jwtTokenKey = await jwt.sign(
         {
           admin: ordinaryAdmin,
           isAdmin: true
@@ -44,14 +44,14 @@ class AdminController {
       });
     }
   }
-  loginAdmin(req, res) {
+  async loginAdmin(req, res) {
     try {
       const { email, password } = req.body;
-      const admin = Admin.findOne({ where: { email } });
+      const admin = await Admin.findOne({ where: { email } });
       if (!admin) {
         throw new Error('Admin with that email does not macth our record or exist');
       }
-      const result = bcrypt.compare(password, caterer.password);
+      const result = await bcrypt.compare(password, caterer.password);
       if (!result) {
         throw new Error('Log In Information does not match our records');
       }
@@ -62,7 +62,7 @@ class AdminController {
         phone: admin.phone
       };
       const ONE_WEEK = 60 * 60 * 24 * 7;
-      const jwtTokenKey = jwt.sign(
+      const jwtTokenKey = await jwt.sign(
         {
           admin: ordinaryAdmin,
           isAdmin: true

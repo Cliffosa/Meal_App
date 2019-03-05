@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 class OrderMiddleware {
-  validateAddToOrder(req, res, next) {
+  async validateAddToOrder(req, res, next) {
     try {
       const schema = {
         mealId: Joi.number()
@@ -11,7 +11,7 @@ class OrderMiddleware {
           .min(1)
           .required()
       };
-      Joi.validate(req.body, schema);
+      await Joi.validate(req.body, schema);
       next();
       return true;
     } catch (error) {
@@ -22,12 +22,12 @@ class OrderMiddleware {
       });
     }
   }
-  validateModifyOrder(req, res, next) {
+  async validateModifyOrder(req, res, next) {
     try {
       const schema = {
         action: Joi.string().required()
       };
-      Joi.validate(req.body, schema);
+      await Joi.validate(req.body, schema);
       if (!['increase', 'decrease', 'delete'].includes(req.body.action)) {
         throw new Error('Invalid Action Requested');
       }
@@ -48,12 +48,12 @@ class OrderMiddleware {
     }
   }
 
-  validateOrdeCheckout(req, res, next) {
+  async validateOrdeCheckout(req, res, next) {
     try {
       const schema = {
         delivery_address: Joi.string().required()
       };
-      Joi.validate(req.body, schema);
+      await Joi.validate(req.body, schema);
       next();
       return true;
     } catch (error) {

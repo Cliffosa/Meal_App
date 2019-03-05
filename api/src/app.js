@@ -3,6 +3,15 @@ import bodyParser from 'body-parser';
 import router from '../src/routes/index';
 import cors from 'cors';
 import sequelize from './util/db';
+import { config } from 'dotenv';
+import User from './models/user';
+import Admin from './models/admin';
+import Meal from './models/meals';
+import Menu from './models/menu';
+import Order from './models/orders';
+import OrderItem from './models/orderItems';
+
+config();
 
 const app = express();
 app.use(bodyParser.json());
@@ -18,12 +27,21 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 8000;
 
+// relationship
+User.hasMany(Order, { constraints: true, onDelete: 'CASCADE' });
+User.hasMany(OrderItem, { constraints: true, onDelete: 'CASCADE' });
+Order.belongsTo(Admin, { constraints: true, onDelete: 'CASCADE' });
+Meal.belongsTo(Admin, { constraints: true, onDelete: 'CASCADE' });
+Menu.belongsTo(Admin, { constraints: true, onDelete: 'CASCADE' });
+OrderItem.belongsTo(Meal, { constraints: true, onDelete: 'CASCADE' });
+
 sequelize
   .sync()
   .then(() => {
     app.listen(PORT, () => {
       console.log(`App listening to port ${PORT}`);
       console.log('Connection has been established successfully.');
+      app.emit('dbConnected');
     });
   })
   .catch(err => {

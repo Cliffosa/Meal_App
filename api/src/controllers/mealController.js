@@ -2,12 +2,12 @@ import fs from 'fs';
 import Meal from '../models/meals';
 
 class MealsController {
-  createMeal(req, res) {
+  async createMeal(req, res) {
     try {
       const { name, price } = req.body;
       const { image } = req.files;
       const imageUrl = `/api/src/images/${image.name}`;
-      const meal = Meal.create({ name, price, imageUrl, adminId: req.admin.id });
+      const meal = await Meal.create({ name, price, imageUrl, adminId: req.admin.id });
       image.mv(`.${imageUrl}`);
       return res.status(201).json({
         status: true,
@@ -27,9 +27,9 @@ class MealsController {
     }
   }
 
-  getAllMeals(req, res) {
+  async getAllMeals(req, res) {
     try {
-      const meals = Meal.findAll({ where: { adminId: req.admin.id } });
+      const meals = await Meal.findAll({ where: { adminId: req.admin.id } });
       return res.status(200).json({
         status: true,
         message: 'Meals Retrieved Successfully!',
@@ -43,9 +43,9 @@ class MealsController {
     }
   }
 
-  updateMeal(req, res) {
+  async updateMeal(req, res) {
     try {
-      const meal = Meal.findOne({ where: { id: req.params.id } });
+      const meal = await Meal.findOne({ where: { id: req.params.id } });
       if (!meal) {
         throw new Error(`Meal with ID ${req.params.id} does not exist, please try another ID`);
       }
@@ -75,12 +75,12 @@ class MealsController {
           }
         });
         mealUpdate.imageUrl;
-        image.mv(`.${imageUrl}`);
+        await image.mv(`.${imageUrl}`);
       } else {
         mealUpdate.imageUrl;
       }
-      const { imageUrl } = mealUpdate;
-      Meal.update({ name, price, imageUrl }, { where: { id: req.params.id } });
+      const { imageUrl } = await mealUpdate;
+      await Meal.update({ name, price, imageUrl }, { where: { id: req.params.id } });
       return res.status(200).json({
         status: true,
         message: 'Meal Updated Successfully!'
@@ -93,14 +93,14 @@ class MealsController {
     }
   }
 
-  deleteMeal(req, res) {
+  async deleteMeal(req, res) {
     try {
       const { id } = req.params;
-      const meal = Meal.findOne({ where: { id: id } });
+      const meal = await Meal.findOne({ where: { id: id } });
       fs.unlink(`.${meal.imageUrl}`, error => {
         if (error) throw new Error(error.message);
       });
-      meal.destroy();
+      await meal.destroy();
       return res.status(200).json({
         status: true,
         message: 'Meal Deleted Successfully!'

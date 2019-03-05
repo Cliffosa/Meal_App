@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 class MealMiddleware {
-  validateAddMealToMenu(req, res, next) {
+  async validateAddMealToMenu(req, res, next) {
     try {
       const schema = {
         mealId: Joi.number().required(),
@@ -9,7 +9,7 @@ class MealMiddleware {
           .min(1)
           .required()
       };
-      Joi.validate(req.body, schema);
+      await Joi.validate(req.body, schema);
       next();
       return true;
     } catch (error) {
@@ -27,7 +27,7 @@ class MealMiddleware {
     }
   }
 
-  validateAddMeal(req, res, next) {
+  async validateAddMeal(req, res, next) {
     try {
       const schema = {
         name: Joi.string().required(),
@@ -35,7 +35,7 @@ class MealMiddleware {
           .min(1)
           .required()
       };
-      Joi.validate(req.body, schema);
+      await Joi.validate(req.body, schema);
       if (rq.files === null) {
         throw new Error(`Meal Image Is Required!`);
       }
@@ -60,7 +60,7 @@ class MealMiddleware {
     }
   }
 
-  validateUpdateMeal(req, res, next) {
+  async validateUpdateMeal(req, res, next) {
     try {
       const schema = {
         name: Joi.string().required(),
@@ -68,7 +68,7 @@ class MealMiddleware {
           .min(1)
           .required()
       };
-      Joi.validate(req.body, schema);
+      await Joi.validate(req.body, schema);
       if (req.files !== null) {
         const allowedImages = ['image/jpg', 'image/png', 'image/jpeg'];
         if (!allowedImages.includes(req.files.image.mimetype)) {
