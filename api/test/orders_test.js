@@ -1,4 +1,6 @@
 process.env.NODE_ENV = 'test';
+import fs from 'fs';
+import path from 'path';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../src/app';
@@ -8,9 +10,26 @@ import User from '../src/models/user';
 import Admin from '../src/models/admin';
 import Menu from '../src/models/menu';
 import Meal from '../src/models/meals';
-import Order from '../src/models/orders';
+import OrderItem from '../src/models/orderItems';
 const { assert, expect } = chai;
 chai.use(chaiHttp);
+
+const srcImg = '../testImage/3.jpg';
+const imageFolder = '../src/images';
+
+const duplicateImage = (filename = 'none.png') => {
+  return new Promise((resolve, reject) => {
+    fs.access(imageFolder, err => {
+      const readStream = fs.createReadStream(srcImg);
+      readStream.once('error', error => {
+        reject(error.message);
+      });
+      readStream.pipe(fs.createWriteStream(path.join(imageFolder, filename)));
+      if (err) reject(err.message);
+    });
+    resolve(true);
+  });
+};
 
 const user0_Payload = {
   name: 'Wale Cliff',
@@ -62,7 +81,7 @@ describe('Admin Get all Orders Endpoint ', () => {
       })
       .catch(err => console.log('GET /orders', err.message));
   });
-  it(`GET /apii/v1/orders - Fetch All Orders - (Authorized)`, done => {
+  it(`GET /apii/v1/orders - Fetch All Orders - Authorized`, done => {
     Admin.findOne({ where: { email: admin0_Payload.email } })
       .then(admin => {
         const { id, name, email, phone } = admin;
@@ -178,151 +197,153 @@ describe('User can add to Orders Endpoint ', () => {
 });
 
 describe('User can Modify Orders Endpoints', () => {
-  Admin.create(admin0_Payload)
-    .then(admin => {
-      return Meal.create({
-        name: 'fried Meat',
-        price: 1500,
-        quantity: 'large',
-        imageUrl: 'meat.png',
-        adminId: admin.id
-      });
-    })
-    .then(meal => {
-      User.create(user0_Payload)
-        .then(user => {
-          return OrderItem.create({ mealId: meal.id, quantity: 'small', userId: user.id });
-        })
-        .then(orderItem => {
-          it(`PUT /api/v1/orders/:Id - Modify Orders == Unauthorized`, done => {
-            chai
-              .request(server)
-              .put(`/api/v1/orders/${orderItem.id}`)
-              .send({
-                action: 'increase'
-              })
-              .then(res => {
-                expect(res).to.have.status(401);
-                assert.equal(res.body.status, 'error');
-                done();
-              })
-              .catch(err => console.log('PUT /orders/:Id', err.message));
-          });
-          it(`PUT /api/v1/orders/:Id - Modify Orders (Validation Test)`, done => {
-            User.findOne({ where: { email: user0_Payload.email } }).then(user => {
-              const { id, name, email, phone } = user;
-              const token = jwt.sign(
-                {
-                  user: { id, name, email, phone }
-                },
-                secret,
-                {
-                  expiresIn: '1h'
-                }
-              );
+  duplicateImage().then(() => {
+    Admin.create(admin0_Payload)
+      .then(admin => {
+        return Meal.create({
+          name: 'fried Meat',
+          price: 1500,
+          quantity: 'large',
+          imageUrl: '../src/images/none.jpg',
+          adminId: admin.id
+        });
+      })
+      .then(meal => {
+        User.create(user0_Payload)
+          .then(user => {
+            return OrderItem.create({ mealId: meal.id, quantity: 'small', userId: user.id });
+          })
+          .then(orderItem => {
+            it(`PUT /api/v1/orders/:Id - Modify Orders == Unauthorized`, done => {
               chai
                 .request(server)
                 .put(`/api/v1/orders/${orderItem.id}`)
-                .set('Authorization', `Bearer ${token}`)
                 .send({
-                  action: 'up'
+                  action: 'increase'
                 })
                 .then(res => {
-                  expect(res).to.have.status(400);
+                  expect(res).to.have.status(401);
                   assert.equal(res.body.status, 'error');
                   done();
                 })
                 .catch(err => console.log('PUT /orders/:Id', err.message));
             });
-          });
-          it(`PUT /api/v1/orders/:Id - Modify Orders (User Can Increase Order Quantity)`, done => {
-            User.findOne({ where: { email: user0_Payload.email } }).then(user => {
-              const { id, name, email, phone } = user;
-              const token = jwt.sign(
-                {
-                  user: { id, name, email, phone }
-                },
-                secret,
-                {
-                  expiresIn: '2'
-                }
-              );
-              chai
-                .request(server)
-                .put(`/api/v1/orders/${orderItem.id}`)
-                .set('Authorization', `Bearer ${token}`)
-                .send({
-                  action: 'increase'
-                })
-                .then(res => {
-                  expect(res).to.have.status(200);
-                  assert.equal(res.body.status, 'success');
-                  done();
-                })
-                .catch(err => console.log('PUT /orders/:Id', err.message));
+            it(`PUT /api/v1/orders/:Id - Modify Orders (Validation Test)`, done => {
+              User.findOne({ where: { email: user0_Payload.email } }).then(user => {
+                const { id, name, email, phone } = user;
+                const token = jwt.sign(
+                  {
+                    user: { id, name, email, phone }
+                  },
+                  secret,
+                  {
+                    expiresIn: '1h'
+                  }
+                );
+                chai
+                  .request(server)
+                  .put(`/api/v1/orders/${orderItem.id}`)
+                  .set('Authorization', `Bearer ${token}`)
+                  .send({
+                    action: 'up'
+                  })
+                  .then(res => {
+                    expect(res).to.have.status(400);
+                    assert.equal(res.body.status, 'error');
+                    done();
+                  })
+                  .catch(err => console.log('PUT /orders/:Id', err.message));
+              });
+            });
+            it(`PUT /api/v1/orders/:Id - Modify Orders (User Can Increase Order Quantity)`, done => {
+              User.findOne({ where: { email: user0_Payload.email } }).then(user => {
+                const { id, name, email, phone } = user;
+                const token = jwt.sign(
+                  {
+                    user: { id, name, email, phone }
+                  },
+                  secret,
+                  {
+                    expiresIn: '2'
+                  }
+                );
+                chai
+                  .request(server)
+                  .put(`/api/v1/orders/${orderItem.id}`)
+                  .set('Authorization', `Bearer ${token}`)
+                  .send({
+                    action: 'increase'
+                  })
+                  .then(res => {
+                    expect(res).to.have.status(200);
+                    assert.equal(res.body.status, 'success');
+                    done();
+                  })
+                  .catch(err => console.log('PUT /orders/:Id', err.message));
+              });
+            });
+            it(`PUT /api/v1/orders/:Id - Modify Orders (User Can Decrease Order Quantity)`, done => {
+              User.findOne({ where: { email: user0_Payload.email } }).then(user => {
+                const { id, name, email, phone } = user;
+                const token = jwt.sign(
+                  {
+                    user: { id, name, email, phone }
+                  },
+                  secret,
+                  {
+                    expiresIn: '1'
+                  }
+                );
+                chai
+                  .request(server)
+                  .put(`/api/v1/orders/${orderItem.id}`)
+                  .set('Authorization', `Bearer ${token}`)
+                  .send({
+                    action: 'decrease'
+                  })
+                  .then(res => {
+                    expect(res).to.have.status(200);
+                    assert.equal(res.body.status, 'success');
+                    done();
+                  })
+                  .catch(err => console.log('PUT /orders/:Id', err.message));
+              });
+            });
+            it(`PUT /api/v1/orders/:Id - Modify Orders (User Can Delete Order)`, done => {
+              User.findOne({ where: { email: user1_Payload.email } }).then(user => {
+                const { id, name, email, phone } = user;
+                const token = jwt.sign(
+                  {
+                    user: { id, name, email, phone }
+                  },
+                  secret,
+                  {
+                    expiresIn: '1h'
+                  }
+                );
+                chai
+                  .request(server)
+                  .put(`/api/v1/orders/${orderItem.id}`)
+                  .set('Authorization', `Bearer ${token}`)
+                  .send({
+                    action: 'delete'
+                  })
+                  .then(res => {
+                    expect(res).to.have.status(200);
+                    assert.equal(res.body.status, 'success');
+                    done();
+                  })
+                  .catch(err => console.log('PUT /orders/:orderId', err.message));
+              });
             });
           });
-          it(`PUT /api/v1/orders/:Id - Modify Orders (User Can Decrease Order Quantity)`, done => {
-            User.findOne({ where: { email: user0_Payload.email } }).then(user => {
-              const { id, name, email, phone } = user;
-              const token = jwt.sign(
-                {
-                  user: { id, name, email, phone }
-                },
-                secret,
-                {
-                  expiresIn: '1'
-                }
-              );
-              chai
-                .request(server)
-                .put(`/api/v1/orders/${orderItem.id}`)
-                .set('Authorization', `Bearer ${token}`)
-                .send({
-                  action: 'decrease'
-                })
-                .then(res => {
-                  expect(res).to.have.status(200);
-                  assert.equal(res.body.status, 'success');
-                  done();
-                })
-                .catch(err => console.log('PUT /orders/:Id', err.message));
-            });
-          });
-          it(`PUT /api/v1/orders/:Id - Modify Orders (User Can Delete Order)`, done => {
-            User.findOne({ where: { email: user1_Payload.email } }).then(user => {
-              const { id, name, email, phone } = user;
-              const token = jwt.sign(
-                {
-                  user: { id, name, email, phone }
-                },
-                secret,
-                {
-                  expiresIn: '1h'
-                }
-              );
-              chai
-                .request(server)
-                .put(`/api/v1/orders/${orderItem.id}`)
-                .set('Authorization', `Bearer ${token}`)
-                .send({
-                  action: 'delete'
-                })
-                .then(res => {
-                  expect(res).to.have.status(200);
-                  assert.equal(res.body.status, 'success');
-                  done();
-                })
-                .catch(err => console.log('PUT /orders/:orderId', err.message));
-            });
-          });
-        });
-    })
-    .catch(err => console.log(err.message));
+      })
+      .catch(err => console.log(err.message));
+  });
 });
 
 describe('Admin Can Get their Menu Endpoint ', () => {
-  Admin.create(admin_1Payload)
+  Admin.create(admin1_Payload)
     .then(admin => {
       return Meal.create({
         name: 'shawama',
