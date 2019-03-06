@@ -2,93 +2,67 @@ process.env.NODE_ENV = 'test';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../src/app';
-import user from '../src/models/admin';
-const expect = require('chai').expect;
+import Admin from '../src/models/admin';
+const { assert, expect } = chai;
 chai.use(chaiHttp);
+
+let login_details = {
+  email: `admin@gmail.com`,
+  password: `123@abc`
+};
+
+let register_details = {
+  name: `Rexford`,
+  email: `ford@email.com`,
+  phone: `07060538862`,
+  password: `123@abc`
+};
 
 beforeEach(done => {
   done();
 });
 
 describe('Admin Auth Signup Tests', () => {
-  it('POST /auth/admin/signup - Admin SignUp Validation Test', done => {
+  it('POST /auth/admin/signup - Admin Can Sign Up', done => {
     chai
       .request(server)
-      .post(`/api/v1/auth/caterer/signup`)
+      .post(`/api/v1/auth/admin/signup`)
       .send({
-        name: 'Roger Test',
-        email: 'roger@test.com',
-        phone: '08028372825',
-        catering_service: 'Book A Meal'
-      })
-      .then(res => {
-        expect(res).to.have.status(400);
-        assert.equal(res.body.status, 'error');
-        assert.equal(res.body.type, 'validation');
-        done();
-      })
-      .catch(err => console.log('POST /auth/caterer/signup', err.message));
-  });
-  it('POST /auth/caterer/signup - Caterer Can Sign Up', done => {
-    chai
-      .request(app)
-      .post(`${API_PREFIX}/auth/caterer/signup`)
-      .send({
-        name: 'Roger Test',
-        email: 'roger@test.com',
-        phone: '08028372825',
-        catering_service: 'Book A Meal',
-        password: 'password'
+        register_details
       })
       .then(res => {
         expect(res).to.have.status(201);
-        assert.equal(res.body.status, 'success');
+        expect(res.body).to.have.status('success');
+        expect(res.body).to.be.an('object');
+        expect(res).to.be.json;
         done();
       })
-      .catch(err => console.log('POST /auth/caterer/signup', err.message));
+      .catch(err => console.log('POST /auth/admin/signup', err.message));
   });
-  it("POST /auth/caterer/signup - Caterer Can't signup again with the same email", done => {
+
+  it("POST /auth/admin/signup - Admin Can't signup again with the existing email", done => {
     chai
-      .request(app)
-      .post(`${API_PREFIX}/auth/caterer/signup`)
+      .request(server)
+      .post(`/api/v1/auth/admin/signup`)
       .send({
-        name: 'Roger Test',
-        email: 'roger@test.com',
-        phone: '08028372825',
-        catering_service: 'Book A Meal',
-        password: 'password'
+        register_details
       })
       .then(res => {
         expect(res).to.have.status(500);
-        assert.equal(res.body.status, 'error');
+        assert.equal(res.body).status('error');
         done();
       })
-      .catch(err => console.log('POST /auth/caterer/signup', err.message));
+      .catch(err => console.log('POST /auth/admin/signup', err.message));
   });
 });
 
-describe('Caterer Login Endpoint Tests', () => {
-  it('POST /auth/caterer/login - Caterer Login Validation Test(Required)', done => {
+describe('Admin Can Login Endpoint Tests', () => {
+  it('POST /auth/admin/login - Admin Cannot Login without first registered', done => {
     chai
-      .request(app)
-      .post(`${API_PREFIX}/auth/caterer/login`)
+      .request(server)
+      .post(`/api/v1/auth/admin/login`)
       .send({
-        email: 'roger@test.com'
-      })
-      .then(res => {
-        expect(res).to.have.status(400);
-        assert.equal(res.body.status, 'error');
-        assert.equal(res.body.type, 'validation');
-        done();
-      })
-      .catch(err => console.log('POST /auth/caterer/login', err.message));
-  });
-  it('POST /auth/caterer/login - Caterer Cannot Login without being registered', done => {
-    chai
-      .request(app)
-      .post(`${API_PREFIX}/auth/caterer/login`)
-      .send({
-        email: 'thesis@science.com',
+        email: 'thisis@science.com',
         password: 'password'
       })
       .then(res => {
@@ -96,29 +70,28 @@ describe('Caterer Login Endpoint Tests', () => {
         assert.equal(res.body.status, 'error');
         done();
       })
-      .catch(err => console.log('POST /auth/caterer/login', err.message));
+      .catch(err => console.log('POST /auth/admin/login', err.message));
   });
-  it('POST /auth/caterer/login - Caterer Can Login', done => {
+  it('POST /auth/admin/login - Admin Can Login', done => {
     chai
-      .request(app)
-      .post(`${API_PREFIX}/auth/caterer/login`)
+      .request(server)
+      .post(`/api/v1/auth/admin/login`)
       .send({
-        email: 'roger@test.com',
-        password: 'password'
+        login_details
       })
       .then(res => {
         expect(res).to.have.status(200);
         assert.equal(res.body.status, 'success');
         done();
       })
-      .catch(err => console.log('POST /auth/caterer/login', err.message));
+      .catch(err => console.log('POST /auth/admin/login', err.message));
   });
-  it("POST /auth/caterer/login - Caterer Can't login with incorrect password", done => {
+  it("POST /auth/admin/login - Admin Can't login with invalid password", done => {
     chai
-      .request(app)
-      .post(`${API_PREFIX}/auth/caterer/login`)
+      .request(server)
+      .post(`/api/v1/auth/admin/login`)
       .send({
-        email: 'roger@test.com',
+        email: 'ford@gmail.com',
         password: 'password111'
       })
       .then(res => {
@@ -126,12 +99,12 @@ describe('Caterer Login Endpoint Tests', () => {
         assert.equal(res.body.status, 'error');
         done();
       })
-      .catch(err => console.log('POST /auth/caterer/login', err.message));
+      .catch(err => console.log('POST /auth/admin/login', err.message));
   });
 });
 
 after(done => {
-  Caterer.destroy({ where: { email: 'roger@test.com' } }).then(() => {
+  Admin.destroy({ where: { email: 'roger@test.com' } }).then(() => {
     done();
   });
 });

@@ -7,7 +7,12 @@ class AdminControllers {
   async registerAdmin(req, res) {
     try {
       const { name, email, phone, password } = req.body;
-      const hash = await bcrypt.hash(password, 8);
+      const existAdmin = await Admin.findOne({ where: { email } });
+      //check if user exist
+      if (existAdmin) {
+        throw new Error('Admin with that email Already exist');
+      }
+      const hash = await bcrypt.hash(password, 10);
       const admin = await Admin.create({
         name,
         email,
@@ -39,7 +44,7 @@ class AdminControllers {
       });
     } catch (error) {
       return res.status(500).json({
-        status: 'error geting token',
+        status: false,
         message: error.message
       });
     }
@@ -78,10 +83,10 @@ class AdminControllers {
         token: `Bearer ${jwtTokenKey}`,
         admin: ordinaryAdmin
       });
-    } catch (err) {
+    } catch (error) {
       return res.status(500).json({
         status: 'error',
-        message: err.message
+        message: error.message
       });
     }
   }

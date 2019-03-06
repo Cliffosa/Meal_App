@@ -7,6 +7,11 @@ class UsersController {
   async registerUser(req, res) {
     try {
       const { name, email, phone, password } = req.body;
+      const existUser = await User.findOne({ where: { email } });
+      //check if user exist
+      if (existUser) {
+        throw new Error('User with that email Already exist');
+      }
       const hash = await bcrypt.hash(password, 8);
       //pass the hashed password
       const user = await User.create({ name, email, phone, password: hash });

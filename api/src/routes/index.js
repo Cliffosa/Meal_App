@@ -13,11 +13,12 @@ import UserMiddleware from '../policies/userMiddleware';
 // set router
 const router = express.Router();
 
-//auth route
+//user auth route
 router.post('/api/v1/auth/signup', UserMiddleware.validateRegister, UserController.registerUser);
 
 router.post('/api/v1/auth/login', UserMiddleware.validateLogin, UserController.loginUser);
 
+//admin auth route
 router.post(
   '/api/v1/auth/admin/signup',
   AdminMiddleware.validateRegister,
@@ -27,13 +28,14 @@ router.post(
 router.post('/api/v1/auth/admin/login', AdminMiddleware.validateLogin, AdminController.loginAdmin);
 
 // meal router
-router.get('/api/v1/meals', AuthController.verifyAdminTokenKey, MealsController.getAllMeals);
 router.post(
   '/api/v1/meals',
   AuthController.verifyAdminTokenKey,
   MealMiddleware.validateAddMeal,
   MealsController.createMeal
 );
+router.get('/api/v1/meals', AuthController.verifyAdminTokenKey, MealsController.getAllMeals);
+
 router.put(
   '/api/v1/meals/:id',
   AuthController.verifyAdminTokenKey,

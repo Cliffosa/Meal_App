@@ -4,10 +4,10 @@ import Meal from '../models/meals';
 class MealController {
   async createMeal(req, res) {
     try {
-      const { name, price } = req.body;
+      const { name, price, quantity } = req.body;
       const { image } = req.files;
       const imageUrl = `/api/src/images/${image.name}`;
-      const meal = await Meal.create({ name, price, imageUrl, adminId: req.admin.id });
+      const meal = await Meal.create({ name, price, quantity, imageUrl, adminId: req.admin.id });
       image.mv(`.${imageUrl}`);
       return res.status(201).json({
         status: true,
@@ -16,6 +16,7 @@ class MealController {
           id: meal.id,
           name: meal.name,
           price: meal.price,
+          quantity: meal.quantity,
           imageUrl: meal.imageUrl
         }
       });
