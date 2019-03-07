@@ -56,7 +56,7 @@ class AdminControllers {
       if (!admin) {
         throw new Error('Admin with that email does not macth our record or exist');
       }
-      const result = await bcrypt.compare(password, caterer.password);
+      const result = await bcrypt.compare(password, admin.password);
       if (!result) {
         throw new Error('Log In Information does not match our records');
       }
