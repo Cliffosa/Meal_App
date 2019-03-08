@@ -19,6 +19,8 @@ var _db = _interopRequireDefault(require("./util/db"));
 
 var _dotenv = require("dotenv");
 
+var _pg = require("pg");
+
 var _user = _interopRequireDefault(require("./models/user"));
 
 var _admin = _interopRequireDefault(require("./models/admin"));
@@ -33,7 +35,12 @@ var _orderItems = _interopRequireDefault(require("./models/orderItems"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _dotenv.config)();
+(0, _dotenv.config)(); // const client = new Client({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: true
+// });
+// client.connect();
+
 var app = (0, _express.default)();
 app.use(_bodyParser.default.json());
 app.use(_bodyParser.default.urlencoded({
