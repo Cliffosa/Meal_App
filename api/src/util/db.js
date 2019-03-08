@@ -3,10 +3,11 @@ import { config } from 'dotenv';
 
 config();
 
-const { DB_NAME, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER } = process.env;
+const { DATABASE_URL,  DB_NAME, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER } = process.env;
 
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   dialect: 'postgres',
+  url: DATABASE_URL,
   port: DB_PORT,
   host: DB_HOST,
   operatorsAliases: false,
