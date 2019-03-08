@@ -5,6 +5,7 @@ import router from '../src/routes/index';
 import cors from 'cors';
 import sequelize from './util/db';
 import { config } from 'dotenv';
+import { Client } from 'pg';
 import User from './models/user';
 import Admin from './models/admin';
 import Meal from './models/meals';
@@ -13,6 +14,13 @@ import Order from './models/orders';
 import OrderItem from './models/orderItems';
 
 config();
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
+});
+
+client.connect();
 
 const app = express();
 app.use(bodyParser.json());
