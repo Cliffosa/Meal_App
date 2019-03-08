@@ -15,12 +15,12 @@ import OrderItem from './models/orderItems';
 
 config();
 
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
-});
+// const client = new Client({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: true
+// });
 
-client.connect();
+// client.connect();
 
 const app = express();
 app.use(bodyParser.json());
