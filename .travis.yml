@@ -12,10 +12,10 @@ env:
 before_install: cd ./api
 script:
   - npm test
-before_script:
-  - psql -c "DROP DATABASE mealbookingapp;" -U postgres
-  - psql -c "CREATE DATABASE mealbookingapp;" -U postgres
-  - psql -c "CREATE USER postgres WITH PASSWORD 'postgres';" -U postgres
+# before_script:
+#   - psql -c "DROP DATABASE mealbookingapp;" -U postgres
+#   - psql -c "CREATE DATABASE mealbookingapp;" -U postgres
+#   - psql -c "CREATE USER postgres WITH PASSWORD 'postgres';" -U postgres
 install:
   - npm install
 after_success:
