@@ -27,9 +27,8 @@ client.connect();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
-app.use(router);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use('/api/v1', Routes);
+app.use(router);
 
 app.get('/', (req, res) => {
   return res.status(200).send({
