@@ -180,14 +180,14 @@ describe('User can add to Orders Endpoint ', () => {
 });
 
 describe('User can Modify Orders Endpoints', () => {
-  Caterer.create(caterer3Payload)
-    .then(caterer => {
+  Admin.create(admin0_Payload)
+    .then(admin => {
       return Meal.create({
         name: 'Dummy Meal',
         price: 500,
         quantity: 4,
         imageUrl: 'fk.png',
-        catererId: caterer.id
+        adminId: admin.id
       });
     })
     .then(meal => {
@@ -322,7 +322,6 @@ describe('User can Modify Orders Endpoints', () => {
     })
     .catch(err => console.log(err.message));
 });
-
 
 describe('Admin Can Get their Menu Endpoint ', () => {
   Admin.create(admin1_Payload)
