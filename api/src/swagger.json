@@ -1,0 +1,626 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Meal Booking App",
+    "description": "Simple Meal Booking Application",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    "contact": {
+      "email": "cliffosa002@gmail.com"
+    }
+  },
+  "tags": [
+    {
+      "name": "Users",
+      "description": "API Endpoints for users in the application"
+    },
+    {
+      "name": "Admin",
+      "description": "API Endpoints for Admin in the application"
+    },
+    {
+      "name": "Meals",
+      "description": "API Endpoints for Admin to manages Meals in the application"
+    },
+    {
+      "name": "Menus",
+      "description": "API Endpoints for Admin to manages Menus in the application"
+    },
+    {
+      "name": "Orders",
+      "description": "API Endpoints for Users Orders in the application"
+    }
+  ],
+  "schemes": ["http"],
+  "consumes": ["application/json", "application/x-www-form-urlencoded"],
+  "produces": ["application/json"],
+  "paths": {
+    "/api/v1/auth/signup": {
+      "post": {
+        "tags": ["Users"],
+        "description": "Register a New User in the application",
+        "requestBody": {
+          "description": "Input Data Format",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of User"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Email of User"
+                  },
+                  "phone": {
+                    "type": "number",
+                    "description": "Phone Number of User"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password of User"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "400": {
+            "description": "User Registration Validation Error"
+          },
+          "500": {
+            "description": "User Already Exist"
+          },
+          "201": {
+            "description": "New user registration successful"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": ["Users"],
+        "description": "Log In a Registered User",
+        "requestBody": {
+          "description": "Input Data Format",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email of Registered User"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password of Registered User"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "400": {
+            "description": "User Login Validation Error"
+          },
+          "500": {
+            "description": "User info does not Exist"
+          },
+          "200": {
+            "description": "User Logged In Successfully"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/admin/signup": {
+      "post": {
+        "tags": ["admin"],
+        "description": "Register a New Admin in the Application",
+        "requestBody": {
+          "description": "Input Data Format",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of Admin"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Email of Admin"
+                  },
+                  "phone": {
+                    "type": "number",
+                    "description": "Phone Number of Admin"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password of Admin"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "400": {
+            "description": "Admin Registration Validation Error"
+          },
+          "500": {
+            "description": "Already Registred"
+          },
+          "201": {
+            "description": "New Admin registration successful"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/admin/login": {
+      "post": {
+        "tags": ["Admin"],
+        "description": "Log In a Registered Admin",
+        "requestBody": {
+          "description": "Input Data Format",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email of Registered Admin"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password of Registered Admin"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "400": {
+            "description": "Admin Login Validation Error"
+          },
+          "500": {
+            "description": "Admin Does Not Exist"
+          },
+          "200": {
+            "description": "Admin Logged In successfully"
+          }
+        }
+      }
+    },
+    "/api/v1/meals/": {
+      "get": {
+        "summary": "Get all meals for logged in Admins",
+        "tags": ["Meals"],
+        "produces": ["application/json"],
+        "responses": {
+          "401": {
+            "description": "Only Authenticated Admin are Authorized"
+          },
+          "200": {
+            "description": "Get Logged In Admin's Meals"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Add New Meal to the Application",
+        "tags": ["Meals"],
+        "requestBody": {
+          "description": "Input Data Format",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of new Meal"
+                  },
+                  "price": {
+                    "type": "number",
+                    "description": "Price of new Meal"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "description": "Quantity for the new Meal"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Image for the new Meal"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "401": {
+            "description": "Only Authenticated Admins are Authorized"
+          },
+          "400": {
+            "description": "Validation Error"
+          },
+          "200": {
+            "description": "New Meal Created"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/meals/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID of meal that we want to manage",
+          "schema": {
+            "type": "number"
+          }
+        }
+      ],
+      "delete": {
+        "summary": "Delete the Meal with the given ID",
+        "tags": ["Meals"],
+        "produces": ["application/json"],
+        "responses": {
+          "401": {
+            "description": "Only Authenticated Admins are Authorized"
+          },
+          "200": {
+            "description": "Meal  Deleted successfully"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update A Meal with the given ID",
+        "tags": ["Meals"],
+        "requestBody": {
+          "description": "Input Data Format",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "New name of the Meal"
+                  },
+                  "price": {
+                    "type": "number",
+                    "description": "New price of the Meal"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "description": "New quantity of the Meal"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Image to be updated"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "401": {
+            "description": "Only Authenticated Admins are Authorized"
+          },
+          "400": {
+            "description": "Validation Error"
+          },
+          "500": {
+            "description": "Meal with given ID does nor exist"
+          },
+          "200": {
+            "description": "Meal Updated successfully"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/menu/": {
+      "get": {
+        "summary": "Get all menus from all Admins",
+        "tags": ["Menus"],
+        "produces": ["application/json"],
+        "responses": {
+          "401": {
+            "description": "Only Authenticated Users are Authorized"
+          },
+          "200": {
+            "description": "All Menus Fetched"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Add New Meal to Menu in the Application",
+        "tags": ["Menus"],
+        "requestBody": {
+          "description": "Input Data Format",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "mealId": {
+                    "type": "number",
+                    "description": "ID of Meal to be Added"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "description": "Quantity of Meal in Menu"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "401": {
+            "description": "Only Authenticated Admins are Authorized"
+          },
+          "400": {
+            "description": "Validation Error"
+          },
+          "200": {
+            "description": "Meal Added to Menu successfully"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/menu/admin": {
+      "get": {
+        "summary": "Get Menu for Logged In Admin",
+        "tags": ["Menus"],
+        "produces": ["application/json"],
+        "responses": {
+          "401": {
+            "description": "Only Authenticated Admins are Authorized"
+          },
+          "200": {
+            "description": "Admin's Menu Fetched"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/orders": {
+      "get": {
+        "summary": "Get all orders to Logged In Admins",
+        "tags": ["Orders"],
+        "produces": ["application/json"],
+        "responses": {
+          "401": {
+            "description": "Only Authenticated Admins are Authorized"
+          },
+          "200": {
+            "description": "All Orders Fetched"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Add Meal to OrderItems of Logged In User in the Application",
+        "tags": ["Orders"],
+        "requestBody": {
+          "description": "Input Data Format",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "mealId": {
+                    "type": "number",
+                    "description": "ID of Meal to be Added"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "description": "Quantity of Meal to add"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "401": {
+            "description": "Only Authenticated Users are Authorized"
+          },
+          "400": {
+            "description": "Validation Error"
+          },
+          "200": {
+            "description": "Meal Added to Order Items"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/orders/user": {
+      "get": {
+        "summary": "Get Order Items for Logged In User",
+        "tags": ["Orders"],
+        "produces": ["application/json"],
+        "responses": {
+          "401": {
+            "description": "Only Authenticated Users are Authorized"
+          },
+          "200": {
+            "description": "User's Order Items Fetched"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/orders/{Id}": {
+      "parameters": [
+        {
+          "name": "Id",
+          "in": "path",
+          "required": true,
+          "description": "ID of order item we want to manage",
+          "schema": {
+            "type": "number"
+          }
+        }
+      ],
+      "put": {
+        "summary": "Update the Order Item with given ID",
+        "tags": ["Orders"],
+        "requestBody": {
+          "description": "Input Data Format",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "description": "Action to be carried out (increase, decrease or delete)"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Only Authenticated Users are Authorized"
+          },
+          "400": {
+            "description": "Validation Error"
+          },
+          "500": {
+            "description": "Order Item With Given ID does not exist"
+          },
+          "200": {
+            "description": "Order Item Updated"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/orders/checkout": {
+      "post": {
+        "summary": "Checkout Orders",
+        "tags": ["Orders"],
+        "requestBody": {
+          "description": "Input Data Format",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "delivery_address": {
+                    "type": "string",
+                    "description": "Delivery Address for Order Delivery"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Only Authenticated Users are Authorized"
+          },
+          "400": {
+            "description": "Validation Error"
+          },
+          "200": {
+            "description": "Order Placed successfully"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "JWT": {
+        "type": "apiKey",
+        "description": "JWT token is received after registering/login, input format: \"Bearer \\<token\\>\"",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  }
+}
