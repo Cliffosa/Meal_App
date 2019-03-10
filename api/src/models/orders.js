@@ -24,7 +24,7 @@ const Order = sequelize.define('order', {
     type: Sequelize.INTEGER,
     default: 0
   },
-  catererId: {
+  adminId: {
     type: Sequelize.INTEGER,
     allowNull: false
   },

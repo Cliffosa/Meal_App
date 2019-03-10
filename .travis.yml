@@ -4,18 +4,12 @@ node_js:
 cache:
   directories:
     - "node_modules"
-# services:
-#   - postgresql
 env:
   global:
     - CODECLIMATE_REPO_TOKEN=c46158de487f3178f23151cf4af5fbe83779d523d09fbd5f124474614be1b147
 before_install: cd ./api
 script:
   - npm test
-# before_script:
-#   - psql -c "DROP DATABASE mealbookingapp;" -U postgres
-#   - psql -c "CREATE DATABASE mealbookingapp;" -U postgres
-#   - psql -c "CREATE USER postgres WITH PASSWORD 'postgres';" -U postgres
 install:
   - npm install
 after_success:
