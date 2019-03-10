@@ -33,27 +33,32 @@ var _orders = _interopRequireDefault(require("./models/orders"));
 
 var _orderItems = _interopRequireDefault(require("./models/orderItems"));
 
+var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
+
+var _swagger = _interopRequireDefault(require("./swagger.json"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _dotenv.config)(); // const client = new Client({
-//   connectionString: process.env.DATABASE_URL,
-//   ssl: true
-// });
-// client.connect();
-
 var app = (0, _express.default)();
+var PORT = process.env.PORT || 8000;
+(0, _dotenv.config)();
+var client = new _pg.Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
+});
+client.connect();
 app.use(_bodyParser.default.json());
 app.use(_bodyParser.default.urlencoded({
   extended: false
 }));
 app.use((0, _cors.default)());
+app.use('/api-docs', _swaggerUiExpress.default.serve, _swaggerUiExpress.default.setup(_swagger.default));
 app.use(_index.default);
 app.get('/', function (req, res) {
   return res.status(200).send({
-    message: "Welcome To Book-A-Meal-App Book-A-Meal is an application that allows customers to make food orders and helps the foodvendor know what the customers want to eat."
+    message: "Welcome To Book-A-Meal-App Book-A-Meal is an application that allows customers to make food orders and helps the food vendor know what the customers want to eat."
   });
-});
-var PORT = process.env.PORT || 8000; // relationship
+}); // relationship
 
 _user.default.hasMany(_orders.default, {
   constraints: true,

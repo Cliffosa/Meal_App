@@ -205,13 +205,13 @@ describe('User can add to Orders Endpoint ', function () {
   });
 });
 describe('User can Modify Orders Endpoints', function () {
-  Caterer.create(caterer3Payload).then(function (caterer) {
+  _admin.default.create(admin0_Payload).then(function (admin) {
     return _meals.default.create({
       name: 'Dummy Meal',
       price: 500,
       quantity: 4,
       imageUrl: 'fk.png',
-      catererId: caterer.id
+      adminId: admin.id
     });
   }).then(function (meal) {
     _user.default.create(user2Payload).then(function (user) {
