@@ -12,11 +12,13 @@ var _app = _interopRequireDefault(require("../src/app"));
 
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
-var _jwt = _interopRequireDefault(require("../src/util/jwt"));
-
 var _admin = _interopRequireDefault(require("../src/models/admin"));
 
 var _meals = _interopRequireDefault(require("../src/models/meals"));
+
+var _user = _interopRequireDefault(require("../src/models/user"));
+
+var _dotenv = require("dotenv");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25,13 +27,41 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 process.env.NODE_ENV = 'test';
+(0, _dotenv.config)();
+var secret = process.env.JWT_SECRET;
 var assert = _chai.default.assert,
     expect = _chai.default.expect;
 
-_chai.default.use(_chaiHttp.default); // const srcImg = '../testImage/3.jpg';
-// const imageFolder = '../src/images';
+_chai.default.use(_chaiHttp.default);
 
+var PREFIX = '/api/v1';
+var ONE_WEEK = 60 * 60 * 24 * 7;
+var srcImg = '../testImage/3.jpg';
+var imageFolder = '../src/images';
 
+var duplicateImage = function duplicateImage() {
+  var filename = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '3.png';
+  return new Promise(function (resolve, reject) {
+    _fs.default.access(imageFolder, function (err) {
+      var readStream = _fs.default.createReadStream(srcImg);
+
+      readStream.once('error', function (error) {
+        reject(error.message);
+      });
+      readStream.pipe(_fs.default.createWriteStream(_path.default.join(imageFolder, filename)));
+      if (err) reject(err.message);
+    });
+
+    resolve(true);
+  });
+};
+
+var user0_Payload = {
+  name: 'user user',
+  phone: '07060538862',
+  email: 'user@gmail.com',
+  password: 'user123456'
+};
 var admin0_Payload = {
   name: 'admin admin',
   phone: '07060538862',
@@ -49,242 +79,54 @@ before(function (done) {
     done();
   });
 });
-describe('Amin Get all Meals', function () {
-  it("GET /api/v1/meals/ - Fetch All Meals Unauthorized", function (done) {
-    _chai.default.request(_app.default).get("/api/v1/meals/").then(function (res) {
-      expect(res).to.have.status(401);
-      assert.equal(res.body.status, 'error');
-      done();
-    }).catch(function (err) {
-      return console.log('GET /meals/', err.message);
-    });
-  });
-  it("GET /api/v1/meals/ - Fetch All Meals - (Admin Authorized)", function (done) {
-    _admin.default.findOne({
-      where: {
-        email: admin1_Payload.email
-      }
-    }).then(function (admin) {
-      var id = admin.id,
-          name = admin.name,
-          email = admin.email,
-          phone = admin.phone;
-
-      var token = _jsonwebtoken.default.sign({
-        admin: {
-          id: id,
-          name: name,
-          email: email,
-          phone: phone
-        },
-        isAdmin: true
-      }, _jwt.default, {
-        expiresIn: 86400
-      });
-
-      _chai.default.request(_app.default).get("/api/v1/meals/").set('Authorization', "Bearer ".concat(token)).then(function (res) {
-        expect(res).to.have.status(200);
-        assert.equal(res.body.status, 'success');
+describe('Meals Endpoints', function () {
+  context('Admin Get all Meals ', function () {
+    it("GET ".concat(PREFIX, "/meals/ - Fetch All Meals Unauthorized"), function (done) {
+      _chai.default.request(_app.default).get("".concat(PREFIX, "/meals/")).then(function (res) {
+        expect(res).to.have.status(401);
+        assert.equal(res.body.status, 'error');
         done();
       }).catch(function (err) {
         return console.log('GET /meals/', err.message);
       });
-    }).catch(function (err) {
-      return console.log(err.message);
     });
-  });
-});
-describe('Admin Add Meal ', function () {
-  it("POST /api/v1/meals/ - Add Meal Unauthorized", function (done) {
-    _chai.default.request(_app.default).post("/api/v1/meals/").send({
-      name: 'Koko Garri',
-      price: 500
-    }).then(function (res) {
-      expect(res).to.have.status(401);
-      assert.equal(res.body.status, 'error');
-      done();
-    }).catch(function (err) {
-      return console.log('POST /meals/', err.message);
-    });
-  });
-  it("POST /api/v1/meals/ - Add Meal Option - Validate", function (done) {
-    _admin.default.findOne({
-      where: {
-        email: admin0_Payload.email
-      }
-    }).then(function (admin) {
-      var token = _jsonwebtoken.default.sign({
-        caterer: {
-          id: admin.id,
-          name: admin.name,
-          email: admin.email,
-          phone: admin.phone
-        },
-        isAdmin: true
-      }, _jwt.default, {
-        expiresIn: '1h'
-      });
-
-      _chai.default.request(_app.default).post("/api/v1/meals/").set('Authorization', "Bearer ".concat(token)).send({
-        name: 'koko Garri',
-        price: 500
-      }).then(function (res) {
-        expect(res).to.have.status(400);
-        assert.equal(res.body.status, 'error');
-        done();
-      }).catch(function (err) {
-        return console.log('POST /meals/', err.message);
-      });
-    }).catch(function (err) {
-      return console.log(err.message);
-    });
-  });
-  it("POST /api/v1/meals/ - Add Meal  - Admin Can Add Meal Option", function (done) {
-    _admin.default.findOne({
-      where: {
-        email: admin0_Payload.email
-      }
-    }).then(function (admin) {
-      var token = _jsonwebtoken.default.sign({
-        caterer: {
-          id: admin.id,
-          name: admin.name,
-          email: admin.email,
-          phone: admin.phone
-        },
-        isAdmin: true
-      }, _jwt.default, {
-        expiresIn: '1h'
-      });
-
-      _chai.default.request(_app.default).post("/api/v1/meals/").set('Authorization', "Bearer ".concat(token)).field('name', 'fufu').field('price', 500).field('quantity', 'small').attach('image', '../testImages/3.png', '3.png').then(function (res) {
-        expect(res).to.have.status(200);
-        assert.equal(res.body.status, 'success');
-        done();
-      }).catch(function (err) {
-        return console.log('POST /meals/', err.message);
-      });
-    }).catch(function (err) {
-      return console.log(err.message);
-    });
-  });
-});
-describe('Admin Can Modify Meal', function () {
-  _admin.default.create(admin1_Payload).then(function (admin) {
-    return _meals.default.create({
-      name: 'rice',
-      price: 1000,
-      quantity: 3,
-      adminId: admin.id
-    });
-  }).then(function (meal) {
-    it("PUT /api/v1/meals/:Id - Modify Meal Option Unauthorized", function (done) {
-      _chai.default.request(_app.default).put("/api/v1/meals/".concat(meal.id)).send({
-        name: 'beans',
-        price: 600
-      }).then(function (res) {
-        expect(res).to.have.status(401);
-        assert.equal(res.body.status, 'error');
-        done();
-      }).catch(function (err) {
-        return console.log('PUT /meals/:Id', err.message);
-      });
-    });
-    it("PUT /api/v1/meals/:Id - Modify Meal Option = Validate", function (done) {
-      _admin.default.findOne({
+    it("GET ".concat(PREFIX, "/meals/ - Fetch All Meals (User Unauthorized)"), function (done) {
+      _user.default.findOne({
         where: {
-          email: admin1_Payload.email
+          email: userPayload.email
         }
-      }).then(function (admin) {
+      }).then(function (user) {
+        var id = user.id,
+            name = user.name,
+            email = user.email,
+            phone = user.phone;
+
         var token = _jsonwebtoken.default.sign({
-          caterer: {
-            id: admin.id,
-            name: admin.name,
-            email: admin.email,
-            phone: admin.phone
-          },
-          isAdmin: true
-        }, _jwt.default, {
-          expiresIn: '1h'
+          user: {
+            id: id,
+            name: name,
+            email: email,
+            phone: phone
+          }
+        }, secret, {
+          expiresIn: ONE_WEEK
         });
 
-        _chai.default.request(_app.default).put("/api/v1/meals/".concat(meal.id)).set('Authorization', "Bearer ".concat(token)).send({
-          name: 'stew'
-        }).then(function (res) {
-          expect(res).to.have.status(400);
+        _chai.default.request(_app.default).get("".concat(PREFIX, "/meals/")).set('Authorization', "Bearer ".concat(token)).then(function (res) {
+          expect(res).to.have.status(401);
           assert.equal(res.body.status, 'error');
           done();
         }).catch(function (err) {
-          return console.log('POST /meals/:Id', err.message);
+          return console.log('GET /meals/', err.message);
         });
       }).catch(function (err) {
         return console.log(err.message);
       });
     });
-    it("PUT /api/v1/meals/:Id - Modify Meal Option Admin Can Modify Meal Option", function (done) {
+    it("GET ".concat(PREFIX, "/meals/ - Fetch All Meals - Admin Authorized)"), function (done) {
       _admin.default.findOne({
         where: {
           email: admin1_Payload.email
-        }
-      }).then(function (admin) {
-        var token = _jsonwebtoken.default.sign({
-          caterer: {
-            id: admin.id,
-            name: admin.name,
-            email: admin.email,
-            phone: admin.phone
-          },
-          isAdmin: true
-        }, _jwt.default, {
-          expiresIn: 86400
-        });
-
-        _chai.default.request(_app.default).put("/api/v1/meals/".concat(meal.id)).set('Authorization', "Bearer ".concat(token)).field('name', 'meal').field('price', 200).attach('image', '../testImage/3.jpg', '3.jpg').then(function (res) {
-          expect(res).to.have.status(200);
-          assert.equal(res.body.status, 'success');
-
-          _fs.default.unlink('../src/images/3.jpg', function (err) {
-            if (err) console.log(err.message);
-          });
-
-          _meals.default.destroy({
-            where: {
-              id: meal.id
-            }
-          }).then(function () {
-            done();
-          });
-        }).catch(function (err) {
-          return console.log('POST /meals/:Id', err.message);
-        });
-      }).catch(function (err) {
-        return console.log(err.message);
-      });
-    });
-  });
-});
-describe('Admin Can Delete Meal', function () {
-  _admin.default.create(admin1_Payload).then(function (admin) {
-    return _meals.default.create({
-      name: 'rice',
-      price: 1000,
-      quantity: 3,
-      adminId: admin.id
-    });
-  }).then(function (meal) {
-    it("/api/v1/meals/:Id - Delete Meal (Unauthorized)", function (done) {
-      _chai.default.request(_app.default).delete("/api/v1/meals/".concat(meal.id)).then(function (res) {
-        expect(res).to.have.status(401);
-        assert.equal(res.body.status, 'error');
-        done();
-      }).catch(function (err) {
-        return console.log('DELETE /meals/:Id', err.message);
-      });
-    });
-    it("DELETE /api/v1/meals/:Id - Delete Meal - Authorized", function (done) {
-      _admin.default.findOne({
-        where: {
-          email: admin0_Payload.email
         }
       }).then(function (admin) {
         var id = admin.id,
@@ -293,27 +135,258 @@ describe('Admin Can Delete Meal', function () {
             phone = admin.phone;
 
         var token = _jsonwebtoken.default.sign({
-          caterer: {
+          admin: {
             id: id,
             name: name,
             email: email,
             phone: phone
           },
           isAdmin: true
-        }, _jwt.default, {
-          expiresIn: '1h'
+        }, secret, {
+          expiresIn: ONE_WEEK
         });
 
-        _chai.default.request(_app.default).delete("/api/v1/meals/".concat(meal.id)).set('Authorization', "Bearer ".concat(token)).then(function (res) {
+        _chai.default.request(_app.default).get("".concat(PREFIX, "/meals/")).set('Authorization', "Bearer ".concat(token)).then(function (res) {
           expect(res).to.have.status(200);
           assert.equal(res.body.status, 'success');
           done();
         }).catch(function (err) {
-          return console.log('DELETE /meals/:Id', err.message);
+          return console.log('GET /meals/', err.message);
         });
       }).catch(function (err) {
         return console.log(err.message);
       });
+    });
+  });
+  context('Admin Add Meal Option )', function () {
+    it("POST ".concat(PREFIX, "/meals/ - Add Meal Option (Unauthorized)"), function (done) {
+      _chai.default.request(_app.default).post("".concat(PREFIX, "/meals/")).send({
+        name: 'meal',
+        price: '500'
+      }).then(function (res) {
+        expect(res).to.have.status(401);
+        assert.equal(res.body.status, 'error');
+        done();
+      }).catch(function (err) {
+        return console.log('POST /meals/', err.message);
+      });
+    });
+    it("POST ".concat(PREFIX, "/meals/ - Add Meal Option *** Validation Test"), function (done) {
+      _admin.default.findOne({
+        where: {
+          email: admin0_Payload.email
+        }
+      }).then(function (admin) {
+        var token = _jsonwebtoken.default.sign({
+          admin: {
+            id: admin.id,
+            name: admin.name,
+            email: admin.email,
+            phone: admin.phone
+          },
+          isAdmin: true
+        }, secret, {
+          expiresIn: ONE_WEEK
+        });
+
+        _chai.default.request(_app.default).post("".concat(PREFIX, "/meals/")).set('Authorization', "Bearer ".concat(token)).send({
+          name: 'meal',
+          price: '500'
+        }).then(function (res) {
+          expect(res).to.have.status(400);
+          assert.equal(res.body.status, 'error');
+          done();
+        }).catch(function (err) {
+          return console.log('POST /meals/', err.message);
+        });
+      }).catch(function (err) {
+        return console.log(err.message);
+      });
+    });
+    it("POST ".concat(PREFIX, "/meals/ - Add Meal Option "), function (done) {
+      _admin.default.findOne({
+        where: {
+          email: Admin0_Payload.email
+        }
+      }).then(function (admin) {
+        var token = _jsonwebtoken.default.sign({
+          admin: {
+            id: admin.id,
+            name: admin.name,
+            email: admin.email,
+            phone: admin.phone
+          },
+          isAdmin: true
+        }, secret, {
+          expiresIn: ONE_WEEK
+        });
+
+        _chai.default.request(_app.default).post("".concat(PREFIX, "/meals/")).set('Authorization', "Bearer ".concat(token)).field('name', 'meal').field('price', '3000').attach('image', '../testImages/3.jpg', '3.jpg').then(function (res) {
+          expect(res).to.have.status(201);
+          assert.equal(res.body.status, 'success');
+          done();
+        }).catch(function (err) {
+          return console.log('POST /meals/', err.message);
+        });
+      }).catch(function (err) {
+        return console.log(err.message);
+      });
+    });
+  });
+  context('Modify Meal Option ', function () {
+    duplicateImage().then(function () {
+      _admin.default.create(admin0_Payload).then(function (admin) {
+        return _meals.default.create({
+          name: 'fufu',
+          price: 100,
+          imageUrl: '../src/images/3.jpg',
+          mealId: admin.id
+        }).then(function (meal) {
+          it("PUT ".concat(PREFIX, "/meals/:Id - Modify Meal Option (Unauthorized)"), function (done) {
+            _chai.default.request(_app.default).put("".concat(PREFIX, "/meals/").concat(meal.id)).send({
+              name: 'meal meal',
+              price: 300
+            }).then(function (res) {
+              expect(res).to.have.status(401);
+              assert.equal(res.body.status, 'error');
+              done();
+            }).catch(function (err) {
+              return console.log('PUT /meals/:mealId', err.message);
+            });
+          });
+          it("PUT ".concat(PREFIX, "/meals/:mealId - Modify Meal Option Validate"), function (done) {
+            _admin.default.findOne({
+              where: {
+                email: admin0_Payload.email
+              }
+            }).then(function (admin) {
+              var token = _jsonwebtoken.default.sign({
+                admin: {
+                  id: admin.id,
+                  name: admin.name,
+                  email: admin.email,
+                  phone: admin.phone
+                },
+                isAdmin: true
+              }, secret, {
+                expiresIn: ONE_WEEK
+              });
+
+              _chai.default.request(_app.default).put("".concat(PREFIX, "/meals/").concat(meal.id)).set('Authorization', "Bearer ".concat(token)).send({
+                name: 300
+              }).then(function (res) {
+                expect(res).to.have.status(400);
+                assert.equal(res.body.status, 'error');
+                done();
+              }).catch(function (err) {
+                return console.log('POST /meals/', err.message);
+              });
+            }).catch(function (err) {
+              return console.log(err.message);
+            });
+          });
+          it("PUT ".concat(PREFIX, "/meals/:Id - Modify Meal Option - (Admin)"), function (done) {
+            _admin.default.findOne({
+              where: {
+                email: admin0_Payload.email
+              }
+            }).then(function (admin) {
+              var token = _jsonwebtoken.default.sign({
+                caterer: {
+                  id: admin.id,
+                  name: admin.name,
+                  email: admin.email,
+                  phone: admin.phone
+                },
+                isAdmin: true
+              }, secret, {
+                expiresIn: ONE_WEEK
+              });
+
+              _chai.default.request(_app.default).put("".concat(PREFIX, "/meals/").concat(meal.id)).set('Authorization', "Bearer ".concat(token)).field('name', 'meal meal').field('price', '400').attach('image', '../testImage/3.jpg', '3.jpg').then(function (res) {
+                expect(res).to.have.status(200);
+                assert.equal(res.body.status, 'success');
+
+                _fs.default.unlink('../src/images/2.jpg', function (err) {
+                  if (err) console.log(err.message);
+                });
+
+                _meals.default.destroy({
+                  where: {
+                    id: meal.id
+                  }
+                }).then(function () {
+                  done();
+                });
+              }).catch(function (err) {
+                return console.log('POST /meals/', err.message);
+              });
+            }).catch(function (err) {
+              return console.log(err.message);
+            });
+          });
+        });
+      });
+    }).catch(function (err) {
+      return console.log(err.message);
+    });
+  });
+  context('Admin Delete Meal Option ', function () {
+    duplicateImage('fake2.png').then(function () {
+      _admin.default.create(admin1_Payload).then(function (admin) {
+        return _meals.default.create({
+          name: 'meal',
+          price: 550,
+          imageUrl: '../src/images/2.jpg',
+          adminId: admin.id
+        });
+      }).then(function (meal) {
+        it("DELETE ".concat(PREFIX, "/meals/:Id - Delete Meal *** Unauthorized"), function (done) {
+          _chai.default.request(_app.default).delete("".concat(PREFIX, "/meals/").concat(meal.id)).then(function (res) {
+            expect(res).to.have.status(401);
+            assert.equal(res.body.status, 'error');
+            done();
+          }).catch(function (err) {
+            return console.log('DELETE /meals/:Id', err.message);
+          });
+        });
+        it("DELETE ".concat(PREFIX, "/meals/:Id - Delete Meal *** Authorized)"), function (done) {
+          _admin.default.findOne({
+            where: {
+              email: admin0_Payload.email
+            }
+          }).then(function (admin) {
+            var id = admin.id,
+                name = admin.name,
+                email = admin.email,
+                phone = admin.phone;
+
+            var token = _jsonwebtoken.default.sign({
+              admin: {
+                id: id,
+                name: name,
+                email: email,
+                phone: phone
+              },
+              isAdmin: true
+            }, secret, {
+              expiresIn: ONE_WEEK
+            });
+
+            _chai.default.request(_app.default).delete("".concat(PREFIX, "/meals/").concat(meal.id)).set('Authorization', "Bearer ".concat(token)).then(function (res) {
+              expect(res).to.have.status(200);
+              assert.equal(res.body.status, 'success');
+              done();
+            }).catch(function (err) {
+              return console.log('DELETE /meals/:Id', err.message);
+            });
+          }).catch(function (err) {
+            return console.log(err.message);
+          });
+        });
+      });
+    }).catch(function (err) {
+      return console.log(err.message);
     });
   });
 });
@@ -339,13 +412,21 @@ after(function (done) {
             });
 
           case 2:
-            return _context.abrupt("return", _admin.default.destroy({
+            _context.next = 4;
+            return _admin.default.destroy({
               where: {
                 email: admin0_Payload.email
               }
+            });
+
+          case 4:
+            return _context.abrupt("return", _user.default.destroy({
+              where: {
+                email: user0_Payload.email
+              }
             }));
 
-          case 3:
+          case 5:
           case "end":
             return _context.stop();
         }

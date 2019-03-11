@@ -116,7 +116,7 @@ describe('Order Endpoints', () => {
             .request(server)
             .post(`${PREFIX}/orders`)
             .send({
-              Id: meal.id,
+              mealId: meal.id,
               quantity: 1
             })
             .then(res => {
@@ -143,7 +143,7 @@ describe('Order Endpoints', () => {
               .post(`${PREFIX}/orders`)
               .set('Authorization', `Bearer ${token}`)
               .send({
-                Id: meal.id
+                mealId: meal.id
               })
               .then(res => {
                 expect(res).to.have.status(400);
@@ -170,7 +170,7 @@ describe('Order Endpoints', () => {
               .post(`${PREFIX}/orders`)
               .set('Authorization', `Bearer ${token}`)
               .send({
-                Id: meal.id,
+                mealId: meal.id,
                 quantity: 1
               })
               .then(res => {
@@ -198,7 +198,7 @@ describe('Order Endpoints', () => {
               .post(`${PREFIX}/orders`)
               .set('Authorization', `Bearer ${token}`)
               .send({
-              Id: meal.id,
+                mealId: meal.id,
                 quantity: 1
               })
               .then(res => {
@@ -327,7 +327,7 @@ describe('Order Endpoints', () => {
                   .catch(err => console.log('PUT /orders/:Id', err.message));
               });
             });
-            it(`PUT ${APREFIX}/orders/:Id - User Can Delete Order)`, done => {
+            it(`PUT ${PREFIX}/orders/:Id - User Can Delete Order)`, done => {
               User.findOne({ where: { email: user1_Payload.email } }).then(user => {
                 const { id, name, email, phone } = user;
                 const token = jwt.sign(
@@ -416,7 +416,7 @@ describe('Order Endpoints', () => {
   });
 
   context('Checkout Orders (User)', () => {
-    Admin.create(admin1_Payload)
+    Admin.create(admin0_Payload)
       .then(admin => {
         return Meal.create({
           name: 'meal',

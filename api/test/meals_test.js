@@ -19,7 +19,7 @@ const PREFIX = '/api/v1';
 const ONE_WEEK = 60 * 60 * 24 * 7;
 
 const srcImg = '../testImage/3.jpg';
-const imageFolder = '../src/images';
+const imageFolder = './api/images';
 
 const duplicateImage = (filename = '3.png') => {
   return new Promise((resolve, reject) => {

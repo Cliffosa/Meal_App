@@ -40,13 +40,13 @@ var _swagger = _interopRequireDefault(require("./swagger.json"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express.default)();
-var PORT = process.env.PORT || 8000;
-(0, _dotenv.config)();
-var client = new _pg.Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
-});
-client.connect();
+var PORT = process.env.PORT || 8000; // config();
+// const client = new Client({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: true
+// });
+// client.connect();
+
 app.use(_bodyParser.default.json());
 app.use(_bodyParser.default.urlencoded({
   extended: false

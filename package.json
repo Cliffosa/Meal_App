@@ -8,17 +8,15 @@
   "main": "index.js",
   "scripts": {
     "start": "node build/src/app.js",
-    "build": "npm run build-babel && npm run dulpicate-swagger-docs && npm audit fix",
+    "build": "babel api/src -d build && npm run dulpicate-swagger-docs",
     "dev-start": "nodemon --exec babel-node api/src/app.js",
     "test": " nyc mocha --timeout 100000 --require @babel/register api/test/*.js --exit || true",
-    "build-babel": "babel -d ./build ./api -s",
     "dulpicate-swagger-docs": "cat ./api/src/swagger.json >> ./build/swagger.json",
     "generate-lcov": "nyc report --reporter=text-lcov > lcov.info",
     "coveralls-coverage": "coveralls < lcov.info",
     "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
     "coverage": "nyc npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage"
   },
-  "heroku-run-build-script": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/Cliffosa/Meal_App.git"

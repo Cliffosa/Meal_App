@@ -34,7 +34,7 @@ var Order = _db.default.define('order', {
     type: _sequelize.default.INTEGER,
     default: 0
   },
-  catererId: {
+  adminId: {
     type: _sequelize.default.INTEGER,
     allowNull: false
   },

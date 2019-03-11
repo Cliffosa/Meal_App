@@ -16,26 +16,24 @@ var assert = _chai.default.assert,
 
 _chai.default.use(_chaiHttp.default);
 
+var PREFIX = '/api/v1';
 var login_details = {
   email: "ford@gmail.com",
   password: "123@abc"
-}; // let register_details = {
-//   name: `Rexford`,
-//   email: `ford@gmail.com`,
-//   phone: `07060538862`,
-//   password: `123@abc`
-// };
-
+};
+var register_details = {
+  name: "Rexford",
+  email: "ford@gmail.com",
+  phone: "07060538862",
+  password: "123@abc"
+};
 before(function (done) {
   done();
 });
 describe('User Auth Signup Endpoint Tests', function () {
   it('POST /auth/signup - User Can Sign Up', function (done) {
-    _chai.default.request(_app.default).post("/api/v1/auth/signup").send({
-      name: "Rexford",
-      email: "ford@gmail.com",
-      phone: "07060538862",
-      password: "123@abc"
+    _chai.default.request(_app.default).post("".concat(PREFIX, "/auth/signup")).send({
+      register_details: register_details
     }).then(function (res) {
       expect(res).to.have.status(201);
       assert.equal(res.body.status, 'success');
@@ -45,7 +43,7 @@ describe('User Auth Signup Endpoint Tests', function () {
     });
   });
   it("POST /auth/signup - User Can't signup again with the same email", function (done) {
-    _chai.default.request(_app.default).post("/api/v1/auth/signup").send({
+    _chai.default.request(_app.default).post("".concat(PREFIX, "/auth/signup")).send({
       name: "Rexford",
       email: "ford@gmail.com",
       phone: "07060538862",
@@ -61,7 +59,7 @@ describe('User Auth Signup Endpoint Tests', function () {
 });
 describe('User Auth Login Endpoint Tests', function () {
   it('POST /auth/login - User Cannot Login without being registered', function (done) {
-    _chai.default.request(_app.default).post("/api/v1/auth/login").send({
+    _chai.default.request(_app.default).post("".concat(PREFIX, "/auth/login")).send({
       login_details: login_details
     }).then(function (res) {
       expect(res).to.have.status(500);
@@ -72,7 +70,7 @@ describe('User Auth Login Endpoint Tests', function () {
     });
   });
   it('POST /auth/login - User Can Login', function (done) {
-    _chai.default.request(_app.default).post("/api/v1/auth/login").send({
+    _chai.default.request(_app.default).post("".concat(PREFIX, "/auth/login")).send({
       login_details: login_details
     }).then(function (res) {
       expect(res).to.have.status(200);
@@ -83,7 +81,7 @@ describe('User Auth Login Endpoint Tests', function () {
     });
   });
   it("POST /auth/login - User Can't login with incorrect password", function (done) {
-    _chai.default.request(_app.default).post("/api/v1/auth/login").send({
+    _chai.default.request(_app.default).post("".concat(PREFIX, "/auth/login")).send({
       email: 'ford@gmail.com',
       password: 'password111'
     }).then(function (res) {
