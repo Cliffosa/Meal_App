@@ -6,14 +6,16 @@ import Admin from '../src/models/admin';
 const { assert, expect } = chai;
 chai.use(chaiHttp);
 
+const PREFIX = '/api/v1';
+
 let login_details = {
   email: `admin@gmail.com`,
   password: `123@abc`
 };
 
 let register_details = {
-  name: `Rexford`,
-  email: `ford@email.com`,
+  name: `Admin`,
+  email: `admin@gmail.com`,
   phone: `07060538862`,
   password: `123@abc`
 };
@@ -26,24 +28,24 @@ describe('Admin Auth Signup Tests', () => {
   it('POST /auth/admin/signup - Admin Can Sign Up', done => {
     chai
       .request(server)
-      .post(`/api/v1/auth/admin/signup`)
+      .post(`${PREFIX}/auth/admin/signup`)
       .send({
         register_details
       })
       .then(res => {
         expect(res).to.have.status(201);
         expect(res.body).to.have.status('success');
-        expect(res.body).to.be.an('object');
+        expect(res.body).to.be.a('object');
         expect(res).to.be.json;
         done();
       })
       .catch(err => console.log('POST /auth/admin/signup', err.message));
   });
 
-  it("POST /auth/admin/signup - Admin Can't signup again with the existing email", done => {
+  it("POST /auth/admin/signup - Admin Can't signup again with the same email", done => {
     chai
       .request(server)
-      .post(`/api/v1/auth/admin/signup`)
+      .post(`${PREFIX}/auth/admin/signup`)
       .send({
         register_details
       })
@@ -60,10 +62,9 @@ describe('Admin Can Login Endpoint Tests', () => {
   it('POST /auth/admin/login - Admin Cannot Login without first registered', done => {
     chai
       .request(server)
-      .post(`/api/v1/auth/admin/login`)
+      .post(`${PREFIX}/auth/admin/login`)
       .send({
-        email: 'thisis@science.com',
-        password: 'password'
+        login_details
       })
       .then(res => {
         expect(res).to.have.status(500);
@@ -75,7 +76,7 @@ describe('Admin Can Login Endpoint Tests', () => {
   it('POST /auth/admin/login - Admin Can Login', done => {
     chai
       .request(server)
-      .post(`/api/v1/auth/admin/login`)
+      .post(`${PREFIX}/auth/admin/login`)
       .send({
         login_details
       })
@@ -89,9 +90,9 @@ describe('Admin Can Login Endpoint Tests', () => {
   it("POST /auth/admin/login - Admin Can't login with invalid password", done => {
     chai
       .request(server)
-      .post(`/api/v1/auth/admin/login`)
+      .post(`${PREFIX}/auth/admin/login`)
       .send({
-        email: 'ford@gmail.com',
+        email: 'admin@gmail.com',
         password: 'password111'
       })
       .then(res => {
@@ -104,7 +105,11 @@ describe('Admin Can Login Endpoint Tests', () => {
 });
 
 after(done => {
-  Admin.destroy({ where: { email: 'roger@test.com' } }).then(() => {
+  Admin.destroy({
+    where: {
+      email: 'admin@gmail.com'
+    }
+  }).then(() => {
     done();
   });
 });

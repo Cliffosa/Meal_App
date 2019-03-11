@@ -6,17 +6,19 @@ import User from '../src/models/user';
 const { assert, expect } = chai;
 chai.use(chaiHttp);
 
+const PREFIX = '/api/v1';
+
 let login_details = {
   email: `ford@gmail.com`,
   password: `123@abc`
 };
 
-// let register_details = {
-//   name: `Rexford`,
-//   email: `ford@gmail.com`,
-//   phone: `07060538862`,
-//   password: `123@abc`
-// };
+let register_details = {
+  name: `Rexford`,
+  email: `ford@gmail.com`,
+  phone: `07060538862`,
+  password: `123@abc`
+};
 
 before(done => {
   done();
@@ -26,12 +28,9 @@ describe('User Auth Signup Endpoint Tests', () => {
   it('POST /auth/signup - User Can Sign Up', done => {
     chai
       .request(server)
-      .post(`/api/v1/auth/signup`)
+      .post(`${PREFIX}/auth/signup`)
       .send({
-        name: `Rexford`,
-        email: `ford@gmail.com`,
-        phone: `07060538862`,
-        password: `123@abc`
+        register_details
       })
       .then(res => {
         expect(res).to.have.status(201);
@@ -44,7 +43,7 @@ describe('User Auth Signup Endpoint Tests', () => {
   it("POST /auth/signup - User Can't signup again with the same email", done => {
     chai
       .request(server)
-      .post(`/api/v1/auth/signup`)
+      .post(`${PREFIX}/auth/signup`)
       .send({
         name: `Rexford`,
         email: `ford@gmail.com`,
@@ -64,7 +63,7 @@ describe('User Auth Login Endpoint Tests', () => {
   it('POST /auth/login - User Cannot Login without being registered', done => {
     chai
       .request(server)
-      .post(`/api/v1/auth/login`)
+      .post(`${PREFIX}/auth/login`)
       .send({
         login_details
       })
@@ -79,7 +78,7 @@ describe('User Auth Login Endpoint Tests', () => {
   it('POST /auth/login - User Can Login', done => {
     chai
       .request(server)
-      .post(`/api/v1/auth/login`)
+      .post(`${PREFIX}/auth/login`)
       .send({
         login_details
       })
@@ -93,7 +92,7 @@ describe('User Auth Login Endpoint Tests', () => {
   it("POST /auth/login - User Can't login with incorrect password", done => {
     chai
       .request(server)
-      .post(`/api/v1/auth/login`)
+      .post(`${PREFIX}/auth/login`)
       .send({
         email: 'ford@gmail.com',
         password: 'password111'
