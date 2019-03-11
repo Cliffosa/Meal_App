@@ -4,6 +4,8 @@ node_js:
 cache:
   directories:
     - "node_modules"
+services:
+  - postgresql
 env:
   global:
     - CODECLIMATE_REPO_TOKEN=c46158de487f3178f23151cf4af5fbe83779d523d09fbd5f124474614be1b147
