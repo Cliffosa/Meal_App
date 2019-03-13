@@ -31,7 +31,7 @@ The following tools will be needed to run this application successfully:
 
 - Run npm install to install all dependencies
 
-- Run npm run dev-start to start the app
+- Run npm run dev to start the app
 
 - Run npm test to run test
 

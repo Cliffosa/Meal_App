@@ -35,7 +35,7 @@ describe('Admin Auth Signup Tests', () => {
       .then(res => {
         expect(res).to.have.status(201);
         expect(res.body).to.have.status('success');
-        expect(res.body).to.be.a('object');
+        expect(res.body).to.be.an('object');
         expect(res).to.be.json;
         done();
       })
