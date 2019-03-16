@@ -79,7 +79,7 @@ class AdminControllers {
       );
       return res.status(200).json({
         status: 'success',
-        message: 'Welcome admin, Logged In Successfully',
+        message: 'Logged In Successfully',
         token: `Bearer ${jwtTokenKey}`,
         admin: ordinaryAdmin
       });

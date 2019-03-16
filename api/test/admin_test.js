@@ -28,7 +28,8 @@ describe('Admin Auth Endpoints', () => {
     resolvingPromise
       .then(res => {
         expect(res).to.have.status(201);
-        assert.equal(res.body.status, 'success');
+        assert.equal(res.body.key, 'success');
+        assert.equal(res.body.key, 'Register Successfully');
       })
       .finally(done)
       .catch(err => console.log('POST /auth/admin/signup', err.message));
@@ -49,6 +50,7 @@ describe('Admin Auth Endpoints', () => {
       .then(res => {
         expect(res).to.have.status(200);
         assert.equal(res.body.status, 'success');
+        assert.equal(res.body.message, 'Logged In Successfully');
       })
       .finally(done)
       .catch(err => console.log('POST /auth/admin/login', err.message));
