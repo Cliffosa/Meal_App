@@ -53,20 +53,3 @@ const admin1_Payload = {
   email: 'admin1@gmail.com',
   password: 'admin123456'
 };
-before(done => {
-  Admin.create(admin1_Payload).then(() => {
-    done();
-  });
-});
-
-after(done => {
-  Admin.destroy({ where: { email: admin0_Payload.email } })
-    .then(async () => {
-      await Admin.destroy({ where: { email: admin1_Payload.email } });
-      await Admin.destroy({ where: { email: admin0_Payload.email } });
-      return User.destroy({ where: { email: user0_Payload.email } });
-    })
-    .then(() => {
-      done();
-    });
-});

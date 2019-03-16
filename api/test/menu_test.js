@@ -42,25 +42,3 @@ const admin1_Payload = {
   phone: '09057996214',
   password: 'cliff12345'
 };
-
-before(done => {
-  User.create(user0_Payload)
-    .then(() => {
-      return Admin.create(admin0_Payload);
-    })
-    .then(() => {
-      done();
-    });
-});
-
-
-after(done => {
-  User.destroy({ where: { email: user0_Payload.email } })
-    .then(async () => {
-      await Admin.destroy({ where: { email: admin0_Payload.email } });
-      return Admin.destroy({ where: { email: admin1_Payload.email } });
-    })
-    .then(() => {
-      done();
-    });
-});

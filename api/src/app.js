@@ -17,12 +17,6 @@ import swaggerDocument from './swagger.json';
 
 const app = express();
 const PORT = process.env.PORT || 8000;
-// config();
-// const client = new Client({
-//   connectionString: process.env.DATABASE_URL,
-//   ssl: true
-// });
-// client.connect();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
