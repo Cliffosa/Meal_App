@@ -10,7 +10,7 @@
     "start": "node build/src/app.js",
     "build": "babel api/src -d build && npm run dulpicate-swagger-docs",
     "dev": "nodemon --exec babel-node api/src/app.js",
-    "test": " nyc mocha --timeout 100000 --require @babel/register api/test/*.js --exit || true",
+    "test": " nyc mocha --timeout 10000 --require @babel/register api/test/*.js --exit || true",
     "dulpicate-swagger-docs": "cat ./src/swagger.json >> ./build/swagger.json",
     "generate-lcov": "nyc report --reporter=text-lcov > lcov.info",
     "coveralls-coverage": "coveralls < lcov.info",
