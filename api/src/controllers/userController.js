@@ -12,7 +12,7 @@ class UsersController {
       if (existUser) {
         throw new Error('User with that email Already exist');
       }
-      const hash = await bcrypt.hash(password, 8);
+      const hash = await bcrypt.hash(password, 10);
       //pass the hashed password
       const user = await User.create({ name, email, phone, password: hash });
       //declare user without password
@@ -34,10 +34,10 @@ class UsersController {
         token: `Bearer ${jwtTokenkey}`,
         user: ordinaryUser
       });
-    } catch (err) {
+    } catch (error) {
       return res.status(500).json({
         status: 'error',
-        message: err.message
+        message: error.message
       });
     }
   }
